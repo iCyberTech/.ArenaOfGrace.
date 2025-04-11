@@ -2064,8 +2064,13 @@
             <div class="community-notice">
                 <i class="fas fa-info-circle"></i> This is a Christian community chat. All messages are visible to the public. Please keep conversations edifying and Christ-centered.
             </div>
-            <div class="spinner" id="chatSpinner"></div>
-            <!-- Content will be loaded here from filename.html -->
+            <!-- Chat messages will be loaded here -->
+            <div class="chat-message">
+                <p>Welcome to our community chat! Feel free to share prayer requests, testimonies, or encouraging words.</p>
+            </div>
+            <div class="chat-message admin">
+                <p>Admin: Please remember to be respectful and kind to one another as we build each other up in faith.</p>
+            </div>
         </div>
         <div class="chat-input">
             <input type="text" id="chatMessage" placeholder="Type your message here...">
@@ -2276,12 +2281,13 @@
             }
         });
 
-        // Chat functionality - Load external HTML file
+        // Chat functionality
         const chatBtn = document.getElementById('chatBtn');
         const chatModal = document.getElementById('chatModal');
         const chatClose = document.getElementById('chatClose');
         const chatBody = document.getElementById('chatBody');
-        const chatSpinner = document.getElementById('chatSpinner');
+        const chatMessageInput = document.getElementById('chatMessage');
+        const sendMessageBtn = document.getElementById('sendMessageBtn');
         
         chatBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -2290,38 +2296,33 @@
             alert("Welcome to our Christian community chat! Please note that all messages in this chat are visible to the public. Let's keep our conversations edifying and Christ-centered.");
             
             chatModal.style.display = 'block';
-            
-            // Show loading spinner
-            chatSpinner.style.display = 'block';
-            chatBody.innerHTML = '';
-            
-            // Load content from external HTML file
-            fetch('filename.html')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.text();
-                })
-                .then(html => {
-                    // Insert the loaded content
-                    chatBody.innerHTML = html;
-                    chatSpinner.style.display = 'none';
-                })
-                .catch(error => {
-                    console.error('Error loading chat content:', error);
-                    chatBody.innerHTML = `
-                        <div class="chat-message admin">
-                            <p>Sorry, we couldn't load the chat content. Please try again later.</p>
-                        </div>
-                    `;
-                    chatSpinner.style.display = 'none';
-                });
+            document.body.style.overflow = 'hidden';
         });
         
         chatClose.addEventListener('click', () => {
             chatModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
         });
+        
+        // Send message functionality
+        sendMessageBtn.addEventListener('click', sendMessage);
+        chatMessageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        function sendMessage() {
+            const messageText = chatMessageInput.value.trim();
+            if (messageText) {
+                const messageElement = document.createElement('div');
+                messageElement.className = 'chat-message';
+                messageElement.innerHTML = `<p>${messageText}</p>`;
+                chatBody.appendChild(messageElement);
+                chatMessageInput.value = '';
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }
+        }
 
         // Voice recording functionality for prayer form
         const recordBtn = document.getElementById('recordBtn');
