@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arena of Grace and Testimonies - Transforming Lives Through Faith</title>
     <meta name="description" content="A vibrant Christian community where faith meets miracles and lives are transformed by God's word">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -167,7 +167,35 @@
             100% { width: 100%; }
         }
 
-        /* Theme Variables */
+        /* Animated Text at the Upper-Left Side of the Homepage */
+        .top-loader-text {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 0.5rem;
+            font-weight: bold;
+            color: #fff;
+            text-transform: uppercase;
+            z-index: 1001;
+            opacity: 0;
+            animation: slideIn 0.5s 5.5s forwards, animateText 2s infinite 6s;
+            background-color: #0077b5;
+            padding: 10px 20px;
+            border-radius: 0 20px 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
         :root {
             --primary-color: #3a5a78;
             --primary-light: #5b7b9a;
@@ -213,11 +241,6 @@
             box-sizing: border-box;
         }
 
-        html {
-            width: 100%;
-            overflow-x: hidden;
-        }
-
         body {
             font-family: 'Montserrat', sans-serif;
             line-height: 1.7;
@@ -227,9 +250,6 @@
             padding-bottom: 120px;
             min-height: 100vh;
             transition: var(--transition);
-            width: 100%;
-            overflow-x: hidden;
-            -webkit-text-size-adjust: 100%;
         }
 
         h1, h2, h3, h4 {
@@ -258,7 +278,6 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 1.5rem;
-            width: 100%;
         }
 
         .section-padding {
@@ -508,7 +527,7 @@
 
         .about-stats {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(3, 1fr));
             gap: 1rem;
             margin-top: 2rem;
         }
@@ -1376,59 +1395,6 @@
             border: none;
         }
 
-        /* Android App Popup */
-        .app-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: var(--card-bg);
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow-hover);
-            z-index: 3000;
-            max-width: 90%;
-            width: 400px;
-            text-align: center;
-        }
-
-        .app-popup h3 {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .app-popup-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .app-popup-btn {
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: var(--border-radius);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .app-popup-btn.yes {
-            background-color: var(--secondary-color);
-            color: #333;
-        }
-
-        .app-popup-btn.no {
-            background-color: #6c757d;
-            color: white;
-        }
-
-        .app-popup-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -1550,55 +1516,6 @@
                 width: 95%;
                 padding: 1.5rem;
             }
-
-            /* Hide quick links in mobile */
-            .footer-column:nth-child(2) {
-                display: none;
-            }
-
-            /* Make prayer request form more visible in mobile */
-            .contact-info {
-                background-color: rgba(212, 160, 23, 0.1);
-                border: 1px solid var(--secondary-color);
-            }
-            
-            /* Fix modal display on mobile */
-            .modal-content {
-                position: relative;
-                margin: 20px auto;
-                padding: 1rem;
-                width: 95%;
-                max-height: 90vh;
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            /* Fix form elements on mobile */
-            .form-control {
-                padding: 0.7rem;
-                font-size: 0.9rem;
-            }
-            
-            textarea.form-control {
-                min-height: 120px;
-            }
-            
-            .submit-btn {
-                padding: 0.7rem 1.5rem;
-                font-size: 0.9rem;
-            }
-            
-            /* Fix recording controls on mobile */
-            .recording-controls {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
-            
-            .record-btn, .stop-btn {
-                width: 100%;
-                padding: 0.7rem;
-            }
         }
 
         @media (max-width: 576px) {
@@ -1682,83 +1599,6 @@
             .contact-info, .contact-form {
                 padding: 1.5rem;
             }
-
-            .app-popup {
-                width: 90%;
-                padding: 1.5rem;
-            }
-            
-            /* Fix modal header on small screens */
-            .modal-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .modal-header h3 {
-                margin-bottom: 0.5rem;
-            }
-            
-            /* Fix prayer request form display */
-            #prayerRequestModal .modal-content {
-                padding: 1rem;
-            }
-            
-            #prayerRequestModal .form-group {
-                margin-bottom: 1rem;
-            }
-            
-            /* Ensure form fits on small screens */
-            #prayerForm {
-                width: 100%;
-                box-sizing: border-box;
-            }
-            
-            /* Fix audio player display */
-            audio {
-                width: 100%;
-            }
-        }
-        
-        /* Additional mobile fixes */
-        @media (max-width: 400px) {
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .section-title h2 {
-                font-size: 1.8rem;
-            }
-            
-            .modal-content {
-                padding: 1rem;
-            }
-            
-            /* Prayer request form specific fixes */
-            #prayerRequestModal .modal-content {
-                width: 95%;
-                margin: 10px auto;
-                padding: 1rem;
-            }
-            
-            #prayerRequestModal .form-control {
-                padding: 0.6rem;
-                font-size: 0.9rem;
-            }
-            
-            #prayerRequestModal textarea.form-control {
-                min-height: 100px;
-            }
-            
-            /* Ensure all form elements are visible */
-            #prayerRequestModal .file-upload-input,
-            #prayerRequestModal select {
-                width: 100%;
-                box-sizing: border-box;
-            }
         }
     </style>
 </head>
@@ -1775,6 +1615,9 @@
         <div class="bible-verse">"For God so loved the world that he gave his one and only Son..." - John 3:16</div>
         <div class="progress-bar"><div class="progress"></div></div>
     </div>
+
+    <!-- Animated Text at the Upper-Left Side of the Homepage -->
+    <div class="top-loader-text">Arena Of Grace</div>
 
     <!-- Theme Switcher -->
     <div class="theme-switcher" id="themeSwitcher">
@@ -1810,7 +1653,7 @@
             <p>Join our vibrant community where lives are transformed through faith, worship, and the power of the Holy Spirit.</p>
             <div class="btn-group">
                 <a href="https://example.com/join-us" target="_blank" class="btn">Join Us This Sunday</a>
-                <button class="btn btn-outline" id="prayerRequestBtn">Wo Haw Ne S3n</button>
+                <button class="btn btn-outline" id="prayerRequestBtn">Ka kyer3 Nyame</button>
             </div>
         </div>
     </section>
@@ -2319,16 +2162,6 @@
         </div>
     </div>
 
-    <!-- Android App Popup -->
-    <div class="app-popup" id="appPopup">
-        <h3>Are you using an Android phone?</h3>
-        <p>Would you like to download our mobile app for easier access to sermons, events, and more?</p>
-        <div class="app-popup-buttons">
-            <button class="app-popup-btn yes" id="appYesBtn">Yes</button>
-            <button class="app-popup-btn no" id="appNoBtn">No</button>
-        </div>
-    </div>
-
     <!-- Bottom Action Buttons -->
     <div class="bottom-actions">
         <a href="#" class="action-btn" id="sermonsBtn">
@@ -2353,7 +2186,7 @@
     <div class="modal" id="prayerRequestModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Wo Haw Ne S3n (What's Your Problem)</h3>
+                <h3>Ka kyer3 Nyame (Tell God)</h3>
                 <span class="close-btn" id="closeModal">&times;</span>
             </div>
             <form action="https://formspree.io/f/xvgklorr" method="POST" enctype="multipart/form-data" id="prayerForm">
@@ -2803,47 +2636,6 @@
         
         window.addEventListener('scroll', animateOnScroll);
         window.addEventListener('load', animateOnScroll);
-
-        // Android App Popup
-        const appPopup = document.getElementById('appPopup');
-        const appYesBtn = document.getElementById('appYesBtn');
-        const appNoBtn = document.getElementById('appNoBtn');
-
-        // Show popup after 1 minute (60000 milliseconds)
-        setTimeout(() => {
-            // Check if user is on mobile
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                appPopup.style.display = 'block';
-            }
-        }, 60000);
-
-        appYesBtn.addEventListener('click', () => {
-            appPopup.style.display = 'none';
-            // Replace with your actual app download link
-            window.open('https://play.google.com/store/apps/details?id=com.example.arenaofgrace', '_blank');
-        });
-
-        appNoBtn.addEventListener('click', () => {
-            appPopup.style.display = 'none';
-        });
-        
-        // Prevent zooming on mobile devices
-        document.addEventListener('gesturestart', function(e) {
-            e.preventDefault();
-        });
-        
-        // Ensure proper viewport scaling
-        function setViewportScale() {
-            const viewport = document.querySelector('meta[name="viewport"]');
-            if (window.innerWidth <= 768) {
-                viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-            } else {
-                viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
-            }
-        }
-        
-        window.addEventListener('resize', setViewportScale);
-        setViewportScale();
     </script>
 </body>
 </html>
