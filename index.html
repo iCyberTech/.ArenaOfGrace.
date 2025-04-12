@@ -1158,6 +1158,96 @@
             animation: spin 1s linear infinite;
         }
 
+        /* Chat Modal */
+        .chat-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .chat-content {
+            background-color: var(--card-bg);
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s;
+        }
+
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .chat-header h3 {
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: var(--bg-color);
+            border-radius: var(--border-radius);
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            border-radius: var(--border-radius);
+            max-width: 80%;
+        }
+
+        .incoming {
+            background-color: var(--primary-light);
+            color: white;
+            margin-right: auto;
+        }
+
+        .outgoing {
+            background-color: var(--secondary-color);
+            color: #333;
+            margin-left: auto;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .chat-input button {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--secondary-color);
+            color: #333;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -1274,9 +1364,14 @@
                 font-size: 1rem;
             }
 
-            .modal-content, .donation-content {
+            .modal-content, .donation-content, .chat-content {
                 margin: 10% auto;
                 width: 95%;
+                padding: 1.5rem;
+            }
+
+            .chat-messages {
+                height: 300px;
             }
         }
 
@@ -1352,6 +1447,22 @@
 
             .slider-container {
                 height: 250px;
+            }
+
+            .contact {
+                padding: 1.5rem;
+            }
+
+            .contact-info, .contact-form {
+                padding: 1.5rem;
+            }
+
+            .chat-input {
+                flex-direction: column;
+            }
+
+            .chat-input button {
+                width: 100%;
             }
         }
     </style>
@@ -1870,6 +1981,30 @@
         </div>
     </div>
 
+    <!-- Chat Modal -->
+    <div class="chat-modal" id="chatModal">
+        <div class="chat-content">
+            <div class="chat-header">
+                <h3>Community Chat</h3>
+                <span class="close-btn" id="closeChatModal">&times;</span>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <div class="message incoming">
+                    <p>Welcome to our Christian community chat! Please keep conversations edifying and Christ-centered.</p>
+                </div>
+                <div class="message incoming">
+                    <p>All messages are visible to the public. Let's encourage one another in faith!</p>
+                </div>
+            </div>
+            
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Type your message...">
+                <button id="sendMessageBtn">Send</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Bottom Action Buttons -->
     <div class="bottom-actions">
         <a href="#" class="action-btn" id="sermonsBtn">
@@ -2117,6 +2252,70 @@
             }
         });
 
+        // Chat Modal functionality
+        const chatBtn = document.getElementById('chatBtn');
+        const chatModal = document.getElementById('chatModal');
+        const closeChatModal = document.getElementById('closeChatModal');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendMessageBtn = document.getElementById('sendMessageBtn');
+        
+        chatBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Show community notice alert first
+            alert("Welcome to our Christian community chat! Please note that all messages in this chat are visible to the public. Let's keep our conversations edifying and Christ-centered.");
+            
+            // Then open the chat modal
+            chatModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeChatModal.addEventListener('click', () => {
+            chatModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === chatModal) {
+                chatModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Simple chat functionality
+        function addMessage(text, isIncoming = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(isIncoming ? 'incoming' : 'outgoing');
+            
+            const messageP = document.createElement('p');
+            messageP.textContent = text;
+            
+            messageDiv.appendChild(messageP);
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        sendMessageBtn.addEventListener('click', () => {
+            const message = chatInput.value.trim();
+            if (message) {
+                addMessage(message);
+                chatInput.value = '';
+                
+                // Simulate response (in a real app, this would be from a server)
+                setTimeout(() => {
+                    addMessage("Thanks for your message! Our team will respond soon.", true);
+                }, 1000);
+            }
+        });
+        
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessageBtn.click();
+            }
+        });
+
         // Sermons and Testimonies buttons functionality
         const sermonsBtn = document.getElementById('sermonsBtn');
         const testimoniesBtn = document.getElementById('testimoniesBtn');
@@ -2153,16 +2352,6 @@
                     behavior: 'smooth'
                 });
             }
-        });
-
-        // Chat functionality - Only show alert, no modal
-        const chatBtn = document.getElementById('chatBtn');
-        
-        chatBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            
-            // Show community notice alert
-            alert("Welcome to our Christian community chat! Please note that all messages in this chat are visible to the public. Let's keep our conversations edifying and Christ-centered.");
         });
 
         // Voice recording functionality for prayer form
