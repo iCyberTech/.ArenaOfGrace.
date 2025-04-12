@@ -10,6 +10,192 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Advanced Christian-themed Loader with Blurred Background */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000;
+            animation: fadeOut 0.9s 9s forwards;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .loader-content {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .halo {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top: 3px solid rgba(255,215,0,0.8);
+            border-bottom: 3px solid rgba(255,215,0,0.8);
+            animation: spinHalo 3s linear infinite;
+            filter: drop-shadow(0 0 10px gold);
+        }
+
+        .halo:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            border-top: 3px solid rgba(255,69,0,0.8);
+            border-bottom: 3px solid rgba(255,69,0,0.8);
+            animation-direction: reverse;
+            filter: drop-shadow(0 0 10px orange);
+        }
+
+        .halo:nth-child(3) {
+            width: 120px;
+            height: 120px;
+            border-top: 3px solid rgba(75,0,130,0.8);
+            border-bottom: 3px solid rgba(75,0,130,0.8);
+            filter: drop-shadow(0 0 10px indigo);
+        }
+
+        .cross-loader {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            animation: pulseCross 4s ease-in-out infinite;
+        }
+
+        .cross-loader:before, .cross-loader:after {
+            content: '';
+            position: absolute;
+            background: white;
+            box-shadow: 0 0 15px rgba(255,255,255,0.8);
+            border-radius: 5px;
+        }
+
+        .cross-loader:before {
+            width: 15px;
+            height: 80px;
+            left: 32.5px;
+            top: 0;
+            background: linear-gradient(to bottom, gold, orange);
+        }
+
+        .cross-loader:after {
+            width: 80px;
+            height: 15px;
+            left: 0;
+            top: 32.5px;
+            background: linear-gradient(to right, gold, orange);
+        }
+
+        .loader-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            margin-top: 30px;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
+            animation: textGlow 4s infinite alternate;
+        }
+
+        .bible-verse {
+            font-size: 1rem;
+            color: white;
+            margin-top: 20px;
+            font-style: italic;
+            max-width: 80%;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 2s 4s forwards;
+            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 5px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 5px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(to right, gold, orange);
+            border-radius: 5px;
+            animation: loadProgress 5s linear forwards;
+        }
+
+        @keyframes spinHalo {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulseCross {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes textGlow {
+            from { text-shadow: 0 0 5px rgba(255,255,255,0.5); }
+            to { text-shadow: 0 0 15px rgba(255,255,255,0.9), 0 0 20px gold; }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        @keyframes loadProgress {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+
+        /* Animated Text at the Upper-Left Side of the Homepage */
+        .top-loader-text {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 0.5rem;
+            font-weight: bold;
+            color: #fff;
+            text-transform: uppercase;
+            z-index: 1001;
+            opacity: 0;
+            animation: slideIn 0.5s 5.5s forwards, animateText 2s infinite 6s;
+            background-color: #0077b5;
+            padding: 10px 20px;
+            border-radius: 0 20px 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
         :root {
             --primary-color: #3a5a78;
             --primary-light: #5b7b9a;
@@ -1417,6 +1603,22 @@
     </style>
 </head>
 <body>
+    <!-- Advanced Christian-themed Loader with Blurred Background -->
+    <div class="loader">
+        <div class="loader-content">
+            <div class="halo"></div>
+            <div class="halo"></div>
+            <div class="halo"></div>
+            <div class="cross-loader"></div>
+        </div>
+        <div class="loader-text">Arena Of Grace Ministries</div>
+        <div class="bible-verse">"For God so loved the world that he gave his one and only Son..." - John 3:16</div>
+        <div class="progress-bar"><div class="progress"></div></div>
+    </div>
+
+    <!-- Animated Text at the Upper-Left Side of the Homepage -->
+    <div class="top-loader-text">Arena Of Grace</div>
+
     <!-- Theme Switcher -->
     <div class="theme-switcher" id="themeSwitcher">
         <i class="fas fa-moon"></i>
