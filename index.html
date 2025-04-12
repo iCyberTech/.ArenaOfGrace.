@@ -167,35 +167,7 @@
             100% { width: 100%; }
         }
 
-        /* Animated Text at the Upper-Left Side of the Homepage */
-        .top-loader-text {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            font-size: 0.5rem;
-            font-weight: bold;
-            color: #fff;
-            text-transform: uppercase;
-            z-index: 1001;
-            opacity: 0;
-            animation: slideIn 0.5s 5.5s forwards, animateText 2s infinite 6s;
-            background-color: #0077b5;
-            padding: 10px 20px;
-            border-radius: 0 20px 20px 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
+        /* Theme Variables */
         :root {
             --primary-color: #3a5a78;
             --primary-light: #5b7b9a;
@@ -527,7 +499,7 @@
 
         .about-stats {
             display: grid;
-            grid-template-columns: repeat(3, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
             margin-top: 2rem;
         }
@@ -1395,6 +1367,59 @@
             border: none;
         }
 
+        /* Android App Popup */
+        .app-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-hover);
+            z-index: 3000;
+            max-width: 90%;
+            width: 400px;
+            text-align: center;
+        }
+
+        .app-popup h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .app-popup-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .app-popup-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .app-popup-btn.yes {
+            background-color: var(--secondary-color);
+            color: #333;
+        }
+
+        .app-popup-btn.no {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .app-popup-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -1516,6 +1541,17 @@
                 width: 95%;
                 padding: 1.5rem;
             }
+
+            /* Hide quick links in mobile */
+            .footer-column:nth-child(2) {
+                display: none;
+            }
+
+            /* Make prayer request form more visible in mobile */
+            .contact-info {
+                background-color: rgba(212, 160, 23, 0.1);
+                border: 1px solid var(--secondary-color);
+            }
         }
 
         @media (max-width: 576px) {
@@ -1599,6 +1635,11 @@
             .contact-info, .contact-form {
                 padding: 1.5rem;
             }
+
+            .app-popup {
+                width: 90%;
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -1615,9 +1656,6 @@
         <div class="bible-verse">"For God so loved the world that he gave his one and only Son..." - John 3:16</div>
         <div class="progress-bar"><div class="progress"></div></div>
     </div>
-
-    <!-- Animated Text at the Upper-Left Side of the Homepage -->
-    <div class="top-loader-text">Arena Of Grace</div>
 
     <!-- Theme Switcher -->
     <div class="theme-switcher" id="themeSwitcher">
@@ -2162,6 +2200,16 @@
         </div>
     </div>
 
+    <!-- Android App Popup -->
+    <div class="app-popup" id="appPopup">
+        <h3>Are you using an Android phone?</h3>
+        <p>Would you like to download our mobile app for easier access to sermons, events, and more?</p>
+        <div class="app-popup-buttons">
+            <button class="app-popup-btn yes" id="appYesBtn">Yes</button>
+            <button class="app-popup-btn no" id="appNoBtn">No</button>
+        </div>
+    </div>
+
     <!-- Bottom Action Buttons -->
     <div class="bottom-actions">
         <a href="#" class="action-btn" id="sermonsBtn">
@@ -2636,6 +2684,29 @@
         
         window.addEventListener('scroll', animateOnScroll);
         window.addEventListener('load', animateOnScroll);
+
+        // Android App Popup
+        const appPopup = document.getElementById('appPopup');
+        const appYesBtn = document.getElementById('appYesBtn');
+        const appNoBtn = document.getElementById('appNoBtn');
+
+        // Show popup after 1 minute (60000 milliseconds)
+        setTimeout(() => {
+            // Check if user is on mobile
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                appPopup.style.display = 'block';
+            }
+        }, 60000);
+
+        appYesBtn.addEventListener('click', () => {
+            appPopup.style.display = 'none';
+            // Replace with your actual app download link
+            window.open('https://play.google.com/store/apps/details?id=com.example.arenaofgrace', '_blank');
+        });
+
+        appNoBtn.addEventListener('click', () => {
+            appPopup.style.display = 'none';
+        });
     </script>
 </body>
 </html>
