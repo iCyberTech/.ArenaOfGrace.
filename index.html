@@ -1158,7 +1158,7 @@
             animation: spin 1s linear infinite;
         }
 
-        /* Chat Modal */
+        /* Chat Modal - Updated for fullscreen */
         .chat-modal {
             display: none;
             position: fixed;
@@ -1166,41 +1166,41 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: var(--card-bg);
             z-index: 2000;
-            overflow-y: auto;
+            overflow: hidden;
         }
 
         .chat-content {
-            background-color: var(--card-bg);
-            margin: 5% auto;
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            width: 90%;
-            max-width: 800px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            animation: modalFadeIn 0.3s;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .chat-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #ddd;
+            z-index: 10;
         }
 
         .chat-header h3 {
-            color: var(--primary-color);
+            color: white;
             margin: 0;
         }
 
         .chat-iframe-container {
+            flex: 1;
             width: 100%;
-            height: 80vh;
-            border-radius: var(--border-radius);
-            overflow: hidden;
+            height: calc(100% - 60px);
+            border: none;
         }
 
         .chat-iframe {
@@ -1325,14 +1325,10 @@
                 font-size: 1rem;
             }
 
-            .modal-content, .donation-content, .chat-content {
+            .modal-content, .donation-content {
                 margin: 10% auto;
                 width: 95%;
                 padding: 1.5rem;
-            }
-
-            .chat-iframe-container {
-                height: 60vh;
             }
         }
 
@@ -1416,10 +1412,6 @@
 
             .contact-info, .contact-form {
                 padding: 1.5rem;
-            }
-
-            .chat-iframe-container {
-                height: 50vh;
             }
         }
     </style>
@@ -1938,17 +1930,15 @@
         </div>
     </div>
 
-    <!-- Chat Modal -->
+    <!-- Chat Modal - Updated for fullscreen -->
     <div class="chat-modal" id="chatModal">
         <div class="chat-content">
             <div class="chat-header">
                 <h3>Community Chat</h3>
                 <span class="close-btn" id="closeChatModal">&times;</span>
             </div>
-            
             <div class="chat-iframe-container">
-                <!-- This iframe will load your file.html -->
-                <iframe src="filename.html" class="chat-iframe" id="chatIframe"></iframe>
+                <iframe src="" class="chat-iframe" id="chatIframe" title="Community Chat" allowfullscreen></iframe>
             </div>
         </div>
     </div>
@@ -2200,7 +2190,7 @@
             }
         });
 
-        // Chat Modal functionality
+        // Chat Modal functionality - Updated for fullscreen
         const chatBtn = document.getElementById('chatBtn');
         const chatModal = document.getElementById('chatModal');
         const closeChatModal = document.getElementById('closeChatModal');
@@ -2217,6 +2207,9 @@
             chatIframe.src = 'file.html';
             chatModal.style.display = 'block';
             document.body.style.overflow = 'hidden';
+            
+            // Add fullscreen class to body when chat is open
+            document.body.classList.add('chat-open');
         });
         
         closeChatModal.addEventListener('click', () => {
@@ -2224,6 +2217,9 @@
             document.body.style.overflow = 'auto';
             // Clear the iframe source when closing
             chatIframe.src = '';
+            
+            // Remove fullscreen class from body when chat is closed
+            document.body.classList.remove('chat-open');
         });
         
         window.addEventListener('click', (e) => {
@@ -2232,6 +2228,9 @@
                 document.body.style.overflow = 'auto';
                 // Clear the iframe source when closing
                 chatIframe.src = '';
+                
+                // Remove fullscreen class from body when chat is closed
+                document.body.classList.remove('chat-open');
             }
         });
 
