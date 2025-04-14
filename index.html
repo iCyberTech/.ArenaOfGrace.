@@ -2504,34 +2504,48 @@
         let startTime;
         let timerInterval;
         
-        recordBtn.addEventListener('click', startRecording);
-        stopBtn.addEventListener('click', stopRecording);
-        
-        async function startRecording() {
+        recordBtn.addEventListener('click', async () => {
             try {
+                // Request microphone access
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                mediaRecorder = new MediaRecorder(stream);
                 
-                mediaRecorder.ondataavailable = event => {
-                    audioChunks.push(event.data);
+                // Create a new MediaRecorder instance
+                mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+                
+                // Event handler for when data is available
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        audioChunks.push(event.data);
+                    }
                 };
                 
+                // Event handler for when recording stops
                 mediaRecorder.onstop = () => {
-                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    // Create a blob from the audio chunks
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    
+                    // Create a URL for the blob
                     const audioUrl = URL.createObjectURL(audioBlob);
+                    
+                    // Set the audio source and show the playback controls
                     audioPlayback.src = audioUrl;
                     audioPlayback.style.display = 'block';
                     
                     // Convert blob to base64 for form submission
                     const reader = new FileReader();
-                    reader.readAsDataURL(audioBlob);
                     reader.onloadend = () => {
-                        audioData.value = reader.result;
+                        audioData.value = reader.result.split(',')[1]; // Get only the base64 data
                     };
+                    reader.readAsDataURL(audioBlob);
+                    
+                    // Stop all tracks in the stream
+                    stream.getTracks().forEach(track => track.stop());
                 };
                 
-                audioChunks = [];
-                mediaRecorder.start();
+                // Start recording
+                mediaRecorder.start(100); // Collect data every 100ms
+                
+                // Update UI
                 recordBtn.disabled = true;
                 stopBtn.disabled = false;
                 recordingStatus.textContent = 'Recording...';
@@ -2542,15 +2556,16 @@
                 
             } catch (error) {
                 console.error('Error accessing microphone:', error);
-                recordingStatus.textContent = 'Error accessing microphone';
+                recordingStatus.textContent = 'Error accessing microphone. Please ensure you have granted microphone permissions.';
             }
-        }
+        });
         
-        function stopRecording() {
-            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        stopBtn.addEventListener('click', () => {
+            if (mediaRecorder && mediaRecorder.state === 'recording') {
+                // Stop recording
                 mediaRecorder.stop();
-                mediaRecorder.stream.getTracks().forEach(track => track.stop());
                 
+                // Update UI
                 recordBtn.disabled = false;
                 stopBtn.disabled = true;
                 recordingStatus.textContent = 'Recording complete';
@@ -2558,7 +2573,7 @@
                 // Stop timer
                 clearInterval(timerInterval);
             }
-        }
+        });
         
         function updateTimer() {
             const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
