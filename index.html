@@ -1375,11 +1375,13 @@
             justify-content: space-between;
             align-items: center;
             z-index: 10;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .chat-header h3 {
             color: white;
             margin: 0;
+            font-size: 1.5rem;
         }
 
         .chat-iframe-container {
@@ -1393,6 +1395,27 @@
             width: 100%;
             height: 100%;
             border: none;
+        }
+
+        /* Improved Close Button for Chat */
+        .chat-close-btn {
+            background-color: var(--secondary-color);
+            color: #333;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-close-btn:hover {
+            background-color: var(--secondary-light);
+            transform: scale(1.1);
         }
 
         /* Community Notice Modal */
@@ -2270,10 +2293,12 @@
         <div class="chat-content">
             <div class="chat-header">
                 <h3>Community Chat</h3>
-                <span class="close-btn" id="closeChatModal">&times;</span>
+                <button class="chat-close-btn" id="closeChatModal">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             <div class="chat-iframe-container">
-                <iframe src="filename.html" class="chat-iframe" id="chatIframe" title="Community Chat" allowfullscreen></iframe>
+                <iframe src="" class="chat-iframe" id="chatIframe" title="Community Chat" allowfullscreen></iframe>
             </div>
         </div>
     </div>
@@ -2549,9 +2574,9 @@
             communityNoticeModal.style.display = 'none';
             
             // Then open the chat modal and load the file.html
-            // Replace 'file.html' with the actual path to your file
             chatIframe.src = 'filename.html';
             chatModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
             
             // Add fullscreen class to body when chat is open
             document.body.classList.add('chat-open');
