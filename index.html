@@ -1418,88 +1418,7 @@
             transform: scale(1.1);
         }
 
-        /* Community Notice Modal */
-        .community-notice-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 2100;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .community-notice-content {
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            width: 90%;
-            max-width: 500px;
-            padding: 2rem;
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            position: relative;
-            animation: modalFadeIn 0.3s;
-        }
-
-        .community-notice-icon {
-            font-size: 3rem;
-            color: var(--secondary-color);
-            margin-bottom: 1rem;
-            animation: pulse 2s infinite;
-        }
-
-        .community-notice-content h3 {
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .community-notice-content p {
-            margin-bottom: 2rem;
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-
-        .community-notice-btn {
-            background-color: var(--secondary-color);
-            color: #333;
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 0 0.5rem;
-        }
-
-        .community-notice-btn:hover {
-            background-color: var(--secondary-light);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .community-notice-btn.secondary {
-            background-color: transparent;
-            border: 2px solid var(--secondary-color);
-            color: var(--secondary-color);
-        }
-
-        .community-notice-btn.secondary:hover {
-            background-color: var(--secondary-color);
-            color: #333;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
+        /* Animations */
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -1621,15 +1540,6 @@
                 width: 95%;
                 padding: 1.5rem;
             }
-
-            .community-notice-content {
-                padding: 1.5rem;
-            }
-
-            .community-notice-btn {
-                padding: 0.6rem 1.5rem;
-                margin-bottom: 0.5rem;
-            }
         }
 
         @media (max-width: 576px) {
@@ -1713,14 +1623,6 @@
             .contact-info, .contact-form {
                 padding: 1.5rem;
             }
-
-            .community-notice-content h3 {
-                font-size: 1.3rem;
-            }
-
-            .community-notice-content p {
-                font-size: 0.9rem;
-            }
         }
     </style>
 </head>
@@ -1736,26 +1638,6 @@
         <div class="loader-text">Arena Of Grace & Testimonies</div>
         <div class="bible-verse">"For God so loved the world that he gave his one and only Son..." - John 3:16</div>
         <div class="progress-bar"><div class="progress"></div></div>
-    </div>
-
-    <!-- Community Notice Modal -->
-    <div class="community-notice-modal" id="communityNoticeModal">
-        <div class="community-notice-content">
-            <div class="community-notice-icon">
-                <i class="fas fa-hands-praying"></i>
-            </div>
-            <h3>Welcome to Our Christian Community Chat</h3>
-            <p>Before you join the conversation, please remember that all messages in this chat are visible to the public. Let's keep our discussions edifying, Christ-centered, and full of grace.</p>
-            <p><strong>"Let your conversation be always full of grace, seasoned with salt, so that you may know how to answer everyone."</strong> - Colossians 4:6</p>
-            <div>
-                <button class="community-notice-btn" id="acceptCommunityRules">
-                    <i class="fas fa-check-circle"></i> I Understand
-                </button>
-                <button class="community-notice-btn secondary" id="declineCommunityRules">
-                    <i class="fas fa-times-circle"></i> Cancel
-                </button>
-            </div>
-        </div>
     </div>
 
     <!-- Theme Switcher -->
@@ -2298,7 +2180,7 @@
                 </button>
             </div>
             <div class="chat-iframe-container">
-                <iframe src="" class="chat-iframe" id="chatIframe" title="Community Chat" allowfullscreen></iframe>
+                <iframe src="filename.html" class="chat-iframe" id="chatIframe" title="Community Chat" allowfullscreen></iframe>
             </div>
         </div>
     </div>
@@ -2550,49 +2432,22 @@
             }
         });
 
-        // Community Notice Modal
-        const communityNoticeModal = document.getElementById('communityNoticeModal');
-        const acceptCommunityRules = document.getElementById('acceptCommunityRules');
-        const declineCommunityRules = document.getElementById('declineCommunityRules');
-
         // Chat Modal functionality - Updated for fullscreen
         const chatBtn = document.getElementById('chatBtn');
         const chatModal = document.getElementById('chatModal');
         const closeChatModal = document.getElementById('closeChatModal');
-        const chatIframe = document.getElementById('chatIframe');
         
         chatBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            
-            // Show the community notice modal
-            communityNoticeModal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        });
-        
-        // Handle community notice modal buttons
-        acceptCommunityRules.addEventListener('click', () => {
-            communityNoticeModal.style.display = 'none';
-            
-            // Then open the chat modal and load the file.html
-            chatIframe.src = 'filename.html';
             chatModal.style.display = 'block';
             document.body.style.overflow = 'hidden';
-            
             // Add fullscreen class to body when chat is open
             document.body.classList.add('chat-open');
-        });
-        
-        declineCommunityRules.addEventListener('click', () => {
-            communityNoticeModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
         });
         
         closeChatModal.addEventListener('click', () => {
             chatModal.style.display = 'none';
             document.body.style.overflow = 'auto';
-            // Clear the iframe source when closing
-            chatIframe.src = '';
-            
             // Remove fullscreen class from body when chat is closed
             document.body.classList.remove('chat-open');
         });
@@ -2601,16 +2456,8 @@
             if (e.target === chatModal) {
                 chatModal.style.display = 'none';
                 document.body.style.overflow = 'auto';
-                // Clear the iframe source when closing
-                chatIframe.src = '';
-                
                 // Remove fullscreen class from body when chat is closed
                 document.body.classList.remove('chat-open');
-            }
-            
-            if (e.target === communityNoticeModal) {
-                communityNoticeModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
             }
         });
 
