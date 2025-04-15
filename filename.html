@@ -827,6 +827,73 @@
             color: white;
         }
 
+        /* Alert Modal */
+        .alert-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .alert-content {
+            background-color: var(--card-bg);
+            margin: 20% auto;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .alert-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .alert-icon.success {
+            color: var(--success-color);
+        }
+
+        .alert-icon.error {
+            color: var(--danger-color);
+        }
+
+        .alert-icon.warning {
+            color: var(--warning-color);
+        }
+
+        .alert-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .alert-message {
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .alert-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .alert-button:hover {
+            background-color: var(--primary-light);
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .main-layout {
@@ -1034,6 +1101,18 @@
         </div>
     </div>
 
+    <!-- Alert Modal -->
+    <div class="alert-modal" id="alertModal">
+        <div class="alert-content">
+            <div class="alert-icon" id="alertIcon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <h3 class="alert-title" id="alertTitle">Alert</h3>
+            <p class="alert-message" id="alertMessage">This is an alert message.</p>
+            <button class="alert-button" id="alertButton">OK</button>
+        </div>
+    </div>
+
     <script>
         // Firebase configuration
         const firebaseConfig = {
@@ -1084,6 +1163,49 @@
                 createdBy: "admin"
             }
         };
+
+        // Show alert function
+        function showAlert(title, message, type = 'error') {
+            const alertModal = document.getElementById('alertModal');
+            const alertTitle = document.getElementById('alertTitle');
+            const alertMessage = document.getElementById('alertMessage');
+            const alertIcon = document.getElementById('alertIcon');
+            const alertButton = document.getElementById('alertButton');
+            
+            alertTitle.textContent = title;
+            alertMessage.textContent = message;
+            
+            // Set icon based on alert type
+            alertIcon.innerHTML = '';
+            const icon = document.createElement('i');
+            
+            if (type === 'success') {
+                icon.className = 'fas fa-check-circle';
+                alertIcon.className = 'alert-icon success';
+            } else if (type === 'warning') {
+                icon.className = 'fas fa-exclamation-triangle';
+                alertIcon.className = 'alert-icon warning';
+            } else {
+                icon.className = 'fas fa-exclamation-circle';
+                alertIcon.className = 'alert-icon error';
+            }
+            
+            alertIcon.appendChild(icon);
+            
+            alertModal.style.display = 'block';
+            
+            // Close when clicking OK
+            alertButton.onclick = function() {
+                alertModal.style.display = 'none';
+            };
+            
+            // Close when clicking outside
+            alertModal.onclick = function(e) {
+                if (e.target === alertModal) {
+                    alertModal.style.display = 'none';
+                }
+            };
+        }
 
         // Theme Switcher Functionality
         const themeSwitcher = document.getElementById('themeSwitcher');
@@ -1193,6 +1315,7 @@
                             })
                             .catch(error => {
                                 console.error('Error initializing groups:', error);
+                                showAlert('Initialization Error', 'There was an error initializing the groups. Please try again later.', 'error');
                                 resolve();
                             });
                     } else {
@@ -1252,7 +1375,24 @@
                     // Success - auth state listener will handle the UI change
                 })
                 .catch(error => {
-                    alert('Login error: ' + error.message);
+                    let errorMessage = 'Login error. Please try again.';
+                    
+                    switch (error.code) {
+                        case 'auth/user-not-found':
+                            errorMessage = 'No account found with this email.';
+                            break;
+                        case 'auth/wrong-password':
+                            errorMessage = 'Incorrect password. Please try again.';
+                            break;
+                        case 'auth/invalid-email':
+                            errorMessage = 'Please enter a valid email address.';
+                            break;
+                        case 'auth/user-disabled':
+                            errorMessage = 'This account has been disabled.';
+                            break;
+                    }
+                    
+                    showAlert('Login Error', errorMessage, 'error');
                     loginBtn.innerHTML = 'Sign In';
                     loginBtn.disabled = false;
                 });
@@ -1269,7 +1409,7 @@
             
             // Validate passwords match
             if (password !== confirmPassword) {
-                alert('Passwords do not match');
+                showAlert('Password Mismatch', 'The passwords you entered do not match. Please try again.', 'error');
                 return;
             }
             
@@ -1294,9 +1434,24 @@
                 })
                 .then(() => {
                     // Success - auth state listener will handle the UI change
+                    showAlert('Account Created', 'Your account has been created successfully!', 'success');
                 })
                 .catch(error => {
-                    alert('Signup error: ' + error.message);
+                    let errorMessage = 'Signup error. Please try again.';
+                    
+                    switch (error.code) {
+                        case 'auth/email-already-in-use':
+                            errorMessage = 'This email is already in use by another account.';
+                            break;
+                        case 'auth/invalid-email':
+                            errorMessage = 'Please enter a valid email address.';
+                            break;
+                        case 'auth/weak-password':
+                            errorMessage = 'Password should be at least 6 characters.';
+                            break;
+                    }
+                    
+                    showAlert('Signup Error', errorMessage, 'error');
                     signupBtn.innerHTML = 'Create Account';
                     signupBtn.disabled = false;
                 });
@@ -1423,13 +1578,13 @@
             
             database.ref().update(updates)
                 .then(() => {
-                    console.log('Joined group successfully');
+                    showAlert('Group Joined', 'You have successfully joined the group!', 'success');
                     // Navigate to the chat page for this group
                     window.location.href = `?groupId=${groupId}`;
                 })
                 .catch(error => {
                     console.error('Error joining group:', error);
-                    alert('Error joining group. Please try again.');
+                    showAlert('Join Error', 'There was an error joining the group. Please try again.', 'error');
                 });
         }
         
@@ -1443,7 +1598,7 @@
             
             database.ref().update(updates)
                 .then(() => {
-                    console.log('Left group successfully');
+                    showAlert('Group Left', 'You have left the group successfully.', 'success');
                     // If leaving the current group, go back to groups list
                     if (groupId === currentGroupId) {
                         window.location.href = window.location.pathname;
@@ -1451,7 +1606,7 @@
                 })
                 .catch(error => {
                     console.error('Error leaving group:', error);
-                    alert('Error leaving group. Please try again.');
+                    showAlert('Leave Error', 'There was an error leaving the group. Please try again.', 'error');
                 });
         }
         
@@ -1602,9 +1757,12 @@
             };
             
             database.ref(`groupMessages/${currentGroupId}/${messageId}`).update(updates)
+                .then(() => {
+                    showAlert('Message Updated', 'Your message has been updated successfully.', 'success');
+                })
                 .catch(error => {
                     console.error('Error updating message:', error);
-                    alert('Error updating message. Please try again.');
+                    showAlert('Update Error', 'There was an error updating your message. Please try again.', 'error');
                 });
         }
         
@@ -1619,9 +1777,12 @@
             if (!currentGroupId) return;
             
             database.ref(`groupMessages/${currentGroupId}/${messageId}`).remove()
+                .then(() => {
+                    showAlert('Message Deleted', 'Your message has been deleted successfully.', 'success');
+                })
                 .catch(error => {
                     console.error('Error deleting message:', error);
-                    alert('Error deleting message. Please try again.');
+                    showAlert('Delete Error', 'There was an error deleting your message. Please try again.', 'error');
                 });
         }
         
@@ -1678,7 +1839,7 @@
                     })
                     .catch(error => {
                         console.error('Error sending message:', error);
-                        alert('Error sending message. Please try again.');
+                        showAlert('Send Error', 'There was an error sending your message. Please try again.', 'error');
                     });
             }
         });
