@@ -241,6 +241,77 @@
             100% { opacity: 0; }
         }
 
+        /* App Download Modal */
+        .app-download-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2001;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .app-download-content {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s;
+        }
+
+        .app-download-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .app-download-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+
+        .app-download-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .download-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .download-btn.yes {
+            background-color: var(--secondary-color);
+            color: #333;
+        }
+
+        .download-btn.yes:hover {
+            background-color: var(--secondary-light);
+            transform: translateY(-3px);
+        }
+
+        .download-btn.no {
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .download-btn.no:hover {
+            background-color: #e9ecef;
+        }
+
         :root {
             --primary-color: #3a5a78;
             --primary-light: #5b7b9a;
@@ -1718,6 +1789,18 @@
         <div class="progress-bar"><div class="progress"></div></div>
     </div>
 
+    <!-- App Download Modal -->
+    <div class="app-download-modal" id="appDownloadModal">
+        <div class="app-download-content">
+            <h3>Mobile App Available!</h3>
+            <p>There's an Android app for this website. Would you like to download it now?</p>
+            <div class="app-download-buttons">
+                <button class="download-btn yes" id="downloadAppBtn">Yes, Download</button>
+                <button class="download-btn no" id="cancelDownloadBtn">No, Thanks</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Theme Switcher -->
     <div class="theme-switcher" id="themeSwitcher">
         <i class="fas fa-moon"></i>
@@ -2766,6 +2849,46 @@
         
         window.addEventListener('scroll', animateOnScroll);
         window.addEventListener('load', animateOnScroll);
+
+        // App Download Modal Functionality
+        const appDownloadModal = document.getElementById('appDownloadModal');
+        const downloadAppBtn = document.getElementById('downloadAppBtn');
+        const cancelDownloadBtn = document.getElementById('cancelDownloadBtn');
+
+        // Show app download modal after 1 minute (60000 milliseconds)
+        setTimeout(() => {
+            appDownloadModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }, 60000);
+
+        // Handle download button click
+        downloadAppBtn.addEventListener('click', () => {
+            // Create a temporary link to trigger the download
+            const link = document.createElement('a');
+            link.href = 'app.apk'; // Path to your APK file
+            link.download = 'ArenaOfGraceApp.apk';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Close the modal
+            appDownloadModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        // Handle cancel button click
+        cancelDownloadBtn.addEventListener('click', () => {
+            appDownloadModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        // Close modal when clicking outside the content
+        window.addEventListener('click', (e) => {
+            if (e.target === appDownloadModal) {
+                appDownloadModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
     </script>
 </body>
 </html>
