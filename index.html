@@ -2865,11 +2865,20 @@
         downloadAppBtn.addEventListener('click', () => {
             // Create a temporary link to trigger the download
             const link = document.createElement('a');
-            link.href = 'https://icybertech.github.io/.ArenaOfGrace./raw/main/app.apk'; // Replace with your actual APK URL
+            // Use GitHub Pages direct download link with the correct MIME type
+            link.href = 'https://icybertech.github.io/.ArenaOfGrace./app.apk/app.apk';
             link.download = 'ArenaOfGraceApp.apk';
+            link.type = 'application/vnd.android.package-archive';
+            
+            // Add link to DOM and trigger click
             document.body.appendChild(link);
             link.click();
-            document.body.removeChild(link);
+            
+            // Clean up
+            setTimeout(() => {
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(link.href);
+            }, 100);
             
             // Close the modal
             appDownloadModal.style.display = 'none';
