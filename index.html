@@ -312,6 +312,204 @@
             background-color: #e9ecef;
         }
 
+        /* Bible Hub Modal Styles */
+        .bible-hub-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .bible-hub-content {
+            background-color: var(--card-bg);
+            margin: 2% auto;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 1000px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s;
+        }
+
+        .bible-hub-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .bible-hub-header h3 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .bible-hub-close-btn {
+            background-color: var(--secondary-color);
+            color: #333;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border: none;
+        }
+
+        .bible-hub-close-btn:hover {
+            background-color: var(--secondary-light);
+            transform: scale(1.1);
+        }
+
+        .bible-hub-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .bible-hub-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-light);
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+        }
+
+        .bible-hub-tab.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--secondary-color);
+        }
+
+        .bible-hub-tab:hover:not(.active) {
+            color: var(--primary-color);
+        }
+
+        .bible-hub-section {
+            display: none;
+        }
+
+        .bible-hub-section.active {
+            display: block;
+        }
+
+        .miracles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .miracle-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .miracle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        .miracle-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .miracle-title {
+            padding: 1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .miracle-details {
+            display: none;
+            padding: 1rem;
+            background-color: rgba(212, 160, 23, 0.1);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+        }
+
+        .miracle-details.active {
+            display: block;
+        }
+
+        .miracle-summary {
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .miracle-reference {
+            font-style: italic;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .bible-guide-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .bible-guide-topic {
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .bible-guide-topic:hover, .bible-guide-topic.active {
+            background-color: var(--secondary-color);
+            color: #333;
+        }
+
+        .bible-guide-content {
+            display: none;
+        }
+
+        .bible-guide-content.active {
+            display: block;
+        }
+
+        .bible-verse-item {
+            background-color: var(--card-bg);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .bible-verse-text {
+            font-style: italic;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .bible-verse-ref {
+            font-weight: 600;
+            color: var(--secondary-color);
+            text-align: right;
+        }
+
         :root {
             --primary-color: #3a5a78;
             --primary-light: #5b7b9a;
@@ -1681,6 +1879,15 @@
                 width: 95%;
                 padding: 1.5rem;
             }
+
+            .bible-hub-content {
+                margin: 10% auto;
+                padding: 1.5rem;
+            }
+
+            .miracles-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
         }
 
         @media (max-width: 576px) {
@@ -1764,6 +1971,24 @@
             .contact-info, .contact-form {
                 padding: 1.5rem;
             }
+
+            .bible-hub-tabs {
+                flex-direction: column;
+            }
+
+            .bible-hub-tab {
+                border-bottom: none;
+                border-left: 3px solid transparent;
+            }
+
+            .bible-hub-tab.active {
+                border-bottom: none;
+                border-left: 3px solid var(--secondary-color);
+            }
+
+            .miracles-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -1797,6 +2022,447 @@
             <div class="app-download-buttons">
                 <button class="download-btn yes" id="downloadAppBtn">Yes, Download</button>
                 <button class="download-btn no" id="cancelDownloadBtn">No, Thanks</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bible Hub Modal -->
+    <div class="bible-hub-modal" id="bibleHubModal">
+        <div class="bible-hub-content">
+            <div class="bible-hub-header">
+                <h3>Bible Hub</h3>
+                <button class="bible-hub-close-btn" id="closeBibleHubModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="bible-hub-tabs">
+                <div class="bible-hub-tab active" data-tab="miracles">Biblical Miracles</div>
+                <div class="bible-hub-tab" data-tab="guide">Bible Guide</div>
+            </div>
+            
+            <div class="bible-hub-section active" id="miraclesSection">
+                <p>Explore the miraculous works of God throughout the Bible. Click on any miracle to learn more about it.</p>
+                
+                <div class="miracles-grid">
+                    <div class="miracle-card" data-miracle="creation">
+                        <img src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Creation" class="miracle-image">
+                        <div class="miracle-title">Creation of the World</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">God spoke the universe into existence in six days, creating light, sky, land, plants, sun, moon, stars, sea creatures, birds, animals, and finally humans in His own image.</p>
+                            <p class="miracle-reference">Genesis 1:1-2:3</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="flood">
+                        <img src="https://images.unsplash.com/photo-1470114716159-e389f8712fda?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Noah's Ark" class="miracle-image">
+                        <div class="miracle-title">Noah's Ark and the Flood</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">God sent a worldwide flood to cleanse the earth of wickedness, saving only Noah, his family, and representatives of each animal species in a massive ark.</p>
+                            <p class="miracle-reference">Genesis 6-9</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="red-sea">
+                        <img src="https://images.unsplash.com/photo-1510797215324-95aa5d4313af?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Red Sea" class="miracle-image">
+                        <div class="miracle-title">Parting of the Red Sea</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">Moses stretched out his hand over the Red Sea, and God caused a strong east wind to divide the waters, allowing the Israelites to cross on dry ground while drowning the pursuing Egyptian army.</p>
+                            <p class="miracle-reference">Exodus 14:21-31</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="manna">
+                        <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Manna" class="miracle-image">
+                        <div class="miracle-title">Manna from Heaven</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">God provided bread from heaven each morning to feed the Israelites during their 40 years in the wilderness, with double portions before the Sabbath.</p>
+                            <p class="miracle-reference">Exodus 16:4-36</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="jordan">
+                        <img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Jordan River" class="miracle-image">
+                        <div class="miracle-title">Jordan River Stopped</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">When the priests carrying the Ark of the Covenant stepped into the Jordan River at flood stage, the waters stopped flowing, allowing Israel to cross into the Promised Land on dry ground.</p>
+                            <p class="miracle-reference">Joshua 3:14-17</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="jericho">
+                        <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Jericho" class="miracle-image">
+                        <div class="miracle-title">Fall of Jericho</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">After marching around Jericho for seven days as God commanded, the Israelites' shouts and trumpet blasts caused the city walls to collapse, giving them victory.</p>
+                            <p class="miracle-reference">Joshua 6:1-27</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="fire">
+                        <img src="https://images.unsplash.com/photo-1518562180175-34a163b1a9a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Elijah and Fire" class="miracle-image">
+                        <div class="miracle-title">Elijah and the Fire from Heaven</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">In a contest with Baal's prophets, Elijah prayed and God sent fire from heaven to consume his water-soaked sacrifice, proving He is the one true God.</p>
+                            <p class="miracle-reference">1 Kings 18:20-40</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="widow">
+                        <img src="https://images.unsplash.com/photo-1516641051054-9df6a1aad654?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Widow's Oil" class="miracle-image">
+                        <div class="miracle-title">Widow's Oil Multiplied</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">Elisha told a poor widow to gather empty jars, and God miraculously multiplied her small amount of oil to fill them all, providing money to pay her debts and live on.</p>
+                            <p class="miracle-reference">2 Kings 4:1-7</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="shadrach">
+                        <img src="https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Fiery Furnace" class="miracle-image">
+                        <div class="miracle-title">Fiery Furnace</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">When Shadrach, Meshach and Abednego refused to worship a golden image, God protected them in a blazing furnace so hot it killed their guards, leaving them unharmed.</p>
+                            <p class="miracle-reference">Daniel 3:8-30</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="lion">
+                        <img src="https://images.unsplash.com/photo-1543852786-1cf6624b9987?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Lion's Den" class="miracle-image">
+                        <div class="miracle-title">Daniel in the Lion's Den</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">God sent an angel to shut the mouths of lions when Daniel was thrown into their den for praying to God rather than the king, emerging unharmed the next morning.</p>
+                            <p class="miracle-reference">Daniel 6:1-28</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="jonah">
+                        <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Jonah and the Whale" class="miracle-image">
+                        <div class="miracle-title">Jonah and the Great Fish</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">After Jonah was thrown overboard for disobeying God, a great fish swallowed him and three days later vomited him onto dry land, giving him a second chance to obey.</p>
+                            <p class="miracle-reference">Jonah 1:17-2:10</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="virgin">
+                        <img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Virgin Birth" class="miracle-image">
+                        <div class="miracle-title">Virgin Birth of Jesus</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">Jesus was miraculously conceived by the Holy Spirit in the virgin Mary, fulfilling prophecy and demonstrating God's power to bring salvation to humanity.</p>
+                            <p class="miracle-reference">Matthew 1:18-25; Luke 1:26-38</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="water-wine">
+                        <img src="https://images.unsplash.com/photo-1518562180175-34a163b1a9a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Water to Wine" class="miracle-image">
+                        <div class="miracle-title">Water Turned to Wine</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">At a wedding in Cana, Jesus turned six stone jars of water into the finest wine, His first public miracle that revealed His glory and power.</p>
+                            <p class="miracle-reference">John 2:1-11</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="loaves">
+                        <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Loaves and Fishes" class="miracle-image">
+                        <div class="miracle-title">Feeding the 5,000</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">With just five loaves and two fish, Jesus miraculously fed over 5,000 people, with twelve baskets of leftovers remaining after all had eaten.</p>
+                            <p class="miracle-reference">Matthew 14:13-21; John 6:1-14</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="walking">
+                        <img src="https://images.unsplash.com/photo-1470114716159-e389f8712fda?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Walking on Water" class="miracle-image">
+                        <div class="miracle-title">Walking on Water</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">Jesus walked on the Sea of Galilee during a storm, inviting Peter to join Him and saving him when he began to sink from doubt.</p>
+                            <p class="miracle-reference">Matthew 14:22-33</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="lazarus">
+                        <img src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Lazarus" class="miracle-image">
+                        <div class="miracle-title">Raising Lazarus</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">After being dead four days, Lazarus was brought back to life when Jesus called him out of the tomb, demonstrating His power over death.</p>
+                            <p class="miracle-reference">John 11:1-44</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="resurrection">
+                        <img src="https://images.unsplash.com/photo-1510797215324-95aa5d4313af?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Resurrection" class="miracle-image">
+                        <div class="miracle-title">Resurrection of Jesus</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">After being crucified and buried for three days, Jesus rose from the dead, conquering sin and death and providing eternal life for all who believe.</p>
+                            <p class="miracle-reference">Matthew 28:1-10; 1 Corinthians 15:3-8</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="pentecost">
+                        <img src="https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Pentecost" class="miracle-image">
+                        <div class="miracle-title">Day of Pentecost</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">The Holy Spirit descended on believers with tongues of fire, enabling them to speak in other languages and launching the church's mission to the world.</p>
+                            <p class="miracle-reference">Acts 2:1-41</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="paul">
+                        <img src="https://images.unsplash.com/photo-1516641051054-9df6a1aad654?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Paul's Conversion" class="miracle-image">
+                        <div class="miracle-title">Paul's Conversion</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">Jesus appeared in a blinding light to Saul (Paul) on the road to Damascus, miraculously transforming this persecutor of Christians into a devoted apostle.</p>
+                            <p class="miracle-reference">Acts 9:1-19</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bible-hub-section" id="guideSection">
+                <p>Explore biblical teachings on important topics. Select a topic to see relevant scripture passages.</p>
+                
+                <div class="bible-guide-topics">
+                    <div class="bible-guide-topic active" data-topic="love">Love</div>
+                    <div class="bible-guide-topic" data-topic="faith">Faith</div>
+                    <div class="bible-guide-topic" data-topic="hope">Hope</div>
+                    <div class="bible-guide-topic" data-topic="salvation">Salvation</div>
+                    <div class="bible-guide-topic" data-topic="prayer">Prayer</div>
+                    <div class="bible-guide-topic" data-topic="forgiveness">Forgiveness</div>
+                    <div class="bible-guide-topic" data-topic="wisdom">Wisdom</div>
+                    <div class="bible-guide-topic" data-topic="peace">Peace</div>
+                    <div class="bible-guide-topic" data-topic="joy">Joy</div>
+                    <div class="bible-guide-topic" data-topic="service">Service</div>
+                </div>
+                
+                <div class="bible-guide-content active" data-topic="love">
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."</p>
+                        <p class="bible-verse-ref">John 3:16</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Love is patient, love is kind. It does not envy, it does not boast, it is not proud. It does not dishonor others, it is not self-seeking, it is not easily angered, it keeps no record of wrongs."</p>
+                        <p class="bible-verse-ref">1 Corinthians 13:4-5</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"We love because he first loved us."</p>
+                        <p class="bible-verse-ref">1 John 4:19</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Above all, love each other deeply, because love covers over a multitude of sins."</p>
+                        <p class="bible-verse-ref">1 Peter 4:8</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"And now these three remain: faith, hope and love. But the greatest of these is love."</p>
+                        <p class="bible-verse-ref">1 Corinthians 13:13</p>
+                    </div>
+                </div>
+                
+                <div class="bible-guide-content" data-topic="faith">
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Now faith is confidence in what we hope for and assurance about what we do not see."</p>
+                        <p class="bible-verse-ref">Hebrews 11:1</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"And without faith it is impossible to please God, because anyone who comes to him must believe that he exists and that he rewards those who earnestly seek him."</p>
+                        <p class="bible-verse-ref">Hebrews 11:6</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"For we live by faith, not by sight."</p>
+                        <p class="bible-verse-ref">2 Corinthians 5:7</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Jesus replied, 'Truly I tell you, if you have faith as small as a mustard seed, you can say to this mountain, "Move from here to there," and it will move. Nothing will be impossible for you.'"</p>
+                        <p class="bible-verse-ref">Matthew 17:20</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Fight the good fight of the faith. Take hold of the eternal life to which you were called when you made your good confession in the presence of many witnesses."</p>
+                        <p class="bible-verse-ref">1 Timothy 6:12</p>
+                    </div>
+                </div>
+                
+                <div class="bible-guide-content" data-topic="hope">
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"For I know the plans I have for you," declares the Lord, "plans to prosper you and not to harm you, plans to give you hope and a future."</p>
+                        <p class="bible-verse-ref">Jeremiah 29:11</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"But those who hope in the Lord will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint."</p>
+                        <p class="bible-verse-ref">Isaiah 40:31</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"May the God of hope fill you with all joy and peace as you trust in him, so that you may overflow with hope by the power of the Holy Spirit."</p>
+                        <p class="bible-verse-ref">Romans 15:13</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"We have this hope as an anchor for the soul, firm and secure. It enters the inner sanctuary behind the curtain."</p>
+                        <p class="bible-verse-ref">Hebrews 6:19</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"And hope does not put us to shame, because God's love has been poured out into our hearts through the Holy Spirit, who has been given to us."</p>
+                        <p class="bible-verse-ref">Romans 5:5</p>
+                    </div>
+                </div>
+                
+                <div class="bible-guide-content" data-topic="salvation">
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"For it is by grace you have been saved, through faith—and this is not from yourselves, it is the gift of God—not by works, so that no one can boast."</p>
+                        <p class="bible-verse-ref">Ephesians 2:8-9</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Jesus answered, 'I am the way and the truth and the life. No one comes to the Father except through me.'"</p>
+                        <p class="bible-verse-ref">John 14:6</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"If you declare with your mouth, 'Jesus is Lord,' and believe in your heart that God raised him from the dead, you will be saved."</p>
+                        <p class="bible-verse-ref">Romans 10:9</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Salvation is found in no one else, for there is no other name under heaven given to mankind by which we must be saved."</p>
+                        <p class="bible-verse-ref">Acts 4:12</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"The Lord is not slow in keeping his promise, as some understand slowness. Instead he is patient with you, not wanting anyone to perish, but everyone to come to repentance."</p>
+                        <p class="bible-verse-ref">2 Peter 3:9</p>
+                    </div>
+                </div>
+                
+                <div class="bible-guide-content" data-topic="prayer">
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God."</p>
+                        <p class="bible-verse-ref">Philippians 4:6</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"This is the confidence we have in approaching God: that if we ask anything according to his will, he hears us."</p>
+                        <p class="bible-verse-ref">1 John 5:14</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"And when you pray, do not keep on babbling like pagans, for they think they will be heard because of their many words. Do not be like them, for your Father knows what you need before you ask him."</p>
+                        <p class="bible-verse-ref">Matthew 6:7-8</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Then you will call on me and come and pray to me, and I will listen to you."</p>
+                        <p class="bible-verse-ref">Jeremiah 29:12</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Therefore I tell you, whatever you ask for in prayer, believe that you have received it, and it will be yours."</p>
+                        <p class="bible-verse-ref">Mark 11:24</p>
+                    </div>
+                </div>
+                
+                <div class="bible-guide-content" data-topic="forgiveness">
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"If we confess our sins, he is faithful and just and will forgive us our sins and purify us from all unrighteousness."</p>
+                        <p class="bible-verse-ref">1 John 1:9</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Bear with each other and forgive one another if any of you has a grievance against someone. Forgive as the Lord forgave you."</p>
+                        <p class="bible-verse-ref">Colossians 3:13</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Then Peter came to Jesus and asked, 'Lord, how many times shall I forgive my brother or sister who sins against me? Up to seven times?' Jesus answered, 'I tell you, not seven times, but seventy-seven times.'"</p>
+                        <p class="bible-verse-ref">Matthew 18:21-22</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"For if you forgive other people when they sin against you, your heavenly Father will also forgive you. But if you do not forgive others their sins, your Father will not forgive your sins."</p>
+                        <p class="bible-verse-ref">Matthew 6:14-15</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"In him we have redemption through his blood, the forgiveness of sins, in accordance with the riches of God's grace."</p>
+                        <p class="bible-verse-ref">Ephesians 1:7</p>
+                    </div>
+                </div>
+                
+                <div class="bible-guide-content" data-topic="wisdom">
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you."</p>
+                        <p class="bible-verse-ref">James 1:5</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"The fear of the Lord is the beginning of wisdom, and knowledge of the Holy One is understanding."</p>
+                        <p class="bible-verse-ref">Proverbs 9:10</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"For the Lord gives wisdom; from his mouth come knowledge and understanding."</p>
+                        <p class="bible-verse-ref">Proverbs 2:6</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Who is wise and understanding among you? Let them show it by their good life, by deeds done in the humility that comes from wisdom."</p>
+                        <p class="bible-verse-ref">James 3:13</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Do not be wise in your own eyes; fear the Lord and shun evil."</p>
+                        <p class="bible-verse-ref">Proverbs 3:7</p>
+                    </div>
+                </div>
+                
+                <div class="bible-guide-content" data-topic="peace">
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Peace I leave with you; my peace I give you. I do not give to you as the world gives. Do not let your hearts be troubled and do not be afraid."</p>
+                        <p class="bible-verse-ref">John 14:27</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God. And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus."</p>
+                        <p class="bible-verse-ref">Philippians 4:6-7</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"You will keep in perfect peace those whose minds are steadfast, because they trust in you."</p>
+                        <p class="bible-verse-ref">Isaiah 26:3</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Let the peace of Christ rule in your hearts, since as members of one body you were called to peace. And be thankful."</p>
+                        <p class="bible-verse-ref">Colossians 3:15</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Now may the Lord of peace himself give you peace at all times and in every way. The Lord be with all of you."</p>
+                        <p class="bible-verse-ref">2 Thessalonians 3:16</p>
+                    </div>
+                </div>
+                
+                <div class="bible-guide-content" data-topic="joy">
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Consider it pure joy, my brothers and sisters, whenever you face trials of many kinds, because you know that the testing of your faith produces perseverance."</p>
+                        <p class="bible-verse-ref">James 1:2-3</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"The joy of the Lord is your strength."</p>
+                        <p class="bible-verse-ref">Nehemiah 8:10</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"You make known to me the path of life; you will fill me with joy in your presence, with eternal pleasures at your right hand."</p>
+                        <p class="bible-verse-ref">Psalm 16:11</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"I have told you this so that my joy may be in you and that your joy may be complete."</p>
+                        <p class="bible-verse-ref">John 15:11</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Rejoice in the Lord always. I will say it again: Rejoice!"</p>
+                        <p class="bible-verse-ref">Philippians 4:4</p>
+                    </div>
+                </div>
+                
+                <div class="bible-guide-content" data-topic="service">
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"For even the Son of Man did not come to be served, but to serve, and to give his life as a ransom for many."</p>
+                        <p class="bible-verse-ref">Mark 10:45</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Each of you should use whatever gift you have received to serve others, as faithful stewards of God's grace in its various forms."</p>
+                        <p class="bible-verse-ref">1 Peter 4:10</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Now that I, your Lord and Teacher, have washed your feet, you also should wash one another's feet. I have set you an example that you should do as I have done for you."</p>
+                        <p class="bible-verse-ref">John 13:14-15</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Do nothing out of selfish ambition or vain conceit. Rather, in humility value others above yourselves, not looking to your own interests but each of you to the interests of the others."</p>
+                        <p class="bible-verse-ref">Philippians 2:3-4</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Whoever wants to become great among you must be your servant, and whoever wants to be first must be slave of all."</p>
+                        <p class="bible-verse-ref">Mark 10:43-44</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1836,6 +2502,7 @@
             <div class="btn-group">
                 <a href="https://www.tiktok.com/@prophet.osei?_t=ZM-8vTS78tvVo6&_r=1" target="_blank" class="btn">Join Us This Sunday</a>
                 <button class="btn btn-outline" id="prayerRequestBtn">Wo Haw Ne S3n</button>
+                <button class="btn btn-outline" id="bibleHubBtn">Bible Hub</button>
             </div>
         </div>
     </section>
@@ -2663,6 +3330,81 @@
                     behavior: 'smooth'
                 });
             }
+        });
+
+        // Bible Hub Modal functionality
+        const bibleHubBtn = document.getElementById('bibleHubBtn');
+        const bibleHubModal = document.getElementById('bibleHubModal');
+        const closeBibleHubModal = document.getElementById('closeBibleHubModal');
+        
+        bibleHubBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            bibleHubModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeBibleHubModal.addEventListener('click', () => {
+            bibleHubModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === bibleHubModal) {
+                bibleHubModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Bible Hub Tabs functionality
+        const bibleHubTabs = document.querySelectorAll('.bible-hub-tab');
+        const bibleHubSections = document.querySelectorAll('.bible-hub-section');
+        
+        bibleHubTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and sections
+                bibleHubTabs.forEach(t => t.classList.remove('active'));
+                bibleHubSections.forEach(s => s.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding section
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(`${tabId}Section`).classList.add('active');
+            });
+        });
+
+        // Bible Guide Topics functionality
+        const bibleGuideTopics = document.querySelectorAll('.bible-guide-topic');
+        const bibleGuideContents = document.querySelectorAll('.bible-guide-content');
+        
+        bibleGuideTopics.forEach(topic => {
+            topic.addEventListener('click', () => {
+                // Remove active class from all topics and contents
+                bibleGuideTopics.forEach(t => t.classList.remove('active'));
+                bibleGuideContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked topic and corresponding content
+                topic.classList.add('active');
+                const topicId = topic.getAttribute('data-topic');
+                document.querySelector(`.bible-guide-content[data-topic="${topicId}"]`).classList.add('active');
+            });
+        });
+
+        // Miracle Cards functionality
+        const miracleCards = document.querySelectorAll('.miracle-card');
+        
+        miracleCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Toggle the active class for the clicked card's details
+                const details = card.querySelector('.miracle-details');
+                details.classList.toggle('active');
+                
+                // Close other open miracle details
+                miracleCards.forEach(c => {
+                    if (c !== card) {
+                        c.querySelector('.miracle-details').classList.remove('active');
+                    }
+                });
+            });
         });
 
         // Voice recording functionality for prayer form
