@@ -2857,15 +2857,21 @@
 
         // Show app download modal after 1 minute (60000 milliseconds)
         setTimeout(() => {
-            appDownloadModal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
+            // Only show if not already shown
+            if (!localStorage.getItem('appDownloadShown')) {
+                appDownloadModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
         }, 60000);
 
         // Handle download button click
         downloadAppBtn.addEventListener('click', () => {
+            // Set a flag that the download was shown
+            localStorage.setItem('appDownloadShown', 'true');
+            
             // Create a temporary link to trigger the download
             const link = document.createElement('a');
-            link.href = 'https://github.com/yourusername/yourrepository/raw/main/app-release.apk'; // Replace with your actual APK URL
+            link.href = 'https://github.com/arenaofgrace/app-releases/raw/main/ArenaOfGraceApp.apk'; // Updated APK download link
             link.download = 'ArenaOfGraceApp.apk';
             document.body.appendChild(link);
             link.click();
@@ -2875,12 +2881,15 @@
             appDownloadModal.style.display = 'none';
             document.body.style.overflow = 'auto';
             
-            // Track download event
-            console.log('App download initiated');
+            // Show download confirmation
+            alert('Download started! If it doesn\'t start automatically, please check your downloads folder.');
         });
 
         // Handle cancel button click
         cancelDownloadBtn.addEventListener('click', () => {
+            // Set a flag that the download was shown
+            localStorage.setItem('appDownloadShown', 'true');
+            
             appDownloadModal.style.display = 'none';
             document.body.style.overflow = 'auto';
         });
@@ -2888,23 +2897,13 @@
         // Close modal when clicking outside the content
         window.addEventListener('click', (e) => {
             if (e.target === appDownloadModal) {
+                // Set a flag that the download was shown
+                localStorage.setItem('appDownloadShown', 'true');
+                
                 appDownloadModal.style.display = 'none';
                 document.body.style.overflow = 'auto';
             }
         });
-
-        // Check if user is on mobile device
-        function isMobileDevice() {
-            return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
-        }
-
-        // Only show app download modal for mobile users
-        if (isMobileDevice()) {
-            setTimeout(() => {
-                appDownloadModal.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            }, 60000);
-        }
     </script>
 </body>
 </html>
