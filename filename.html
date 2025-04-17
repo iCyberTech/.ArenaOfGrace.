@@ -40,6 +40,13 @@
             --message-action-hover: #d4a017;
             --message-action-bg: #000000;
             --message-action-bg-hover: rgba(0, 0, 0, 0.7);
+            --message-received-bg: rgba(212, 160, 23, 0.1);
+            --message-sent-bg: #3a5a78;
+            --message-padding: 12px 16px;
+            --message-border-radius: 18px;
+            --message-max-width: 75%;
+            --message-margin: 8px 0;
+            --message-avatar-size: 36px;
         }
 
         .dark-theme {
@@ -62,6 +69,8 @@
             --message-action-hover: #e6b800;
             --message-action-bg: rgba(255, 255, 255, 0.05);
             --message-action-bg-hover: rgba(255, 255, 255, 0.1);
+            --message-received-bg: rgba(212, 160, 23, 0.2);
+            --message-sent-bg: #5b7b9a;
         }
 
         * {
@@ -318,38 +327,73 @@
             padding: 1.5rem;
             overflow-y: auto;
             background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message-container {
+            display: flex;
+            margin: var(--message-margin);
+            position: relative;
+        }
+
+        .message-container.received {
+            align-self: flex-start;
+        }
+
+        .message-container.sent {
+            align-self: flex-end;
+        }
+
+        .message-avatar {
+            width: var(--message-avatar-size);
+            height: var(--message-avatar-size);
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .message-container.sent .message-avatar {
+            display: none;
+        }
+
+        .message-content {
+            max-width: var(--message-max-width);
+            display: flex;
+            flex-direction: column;
         }
 
         .message {
-            margin-bottom: 1.5rem;
-            max-width: 70%;
-            position: relative;
-        }
-
-        .message-inner {
-            padding: 1rem;
-            border-radius: var(--border-radius);
+            padding: var(--message-padding);
+            border-radius: var(--message-border-radius);
             position: relative;
             word-wrap: break-word;
+            box-shadow: var(--box-shadow);
         }
 
-        .message.received .message-inner {
-            background-color: rgba(212, 160, 23, 0.1);
-            border-top-left-radius: 0;
+        .message.received {
+            background-color: var(--message-received-bg);
+            border-top-left-radius: 4px;
+            color: var(--text-color);
         }
 
-        .message.sent .message-inner {
-            background-color: var(--primary-color);
+        .message.sent {
+            background-color: var(--message-sent-bg);
             color: white;
-            border-top-right-radius: 0;
-            margin-left: auto;
+            border-top-right-radius: 4px;
         }
 
         .message-info {
             display: flex;
             justify-content: space-between;
-            margin-top: 0.5rem;
-            font-size: 0.8rem;
+            margin-top: 6px;
+            font-size: 0.75rem;
             color: var(--text-light);
         }
 
@@ -391,6 +435,12 @@
             display: flex;
             gap: 0.5rem;
             margin-top: 0.5rem;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .message-container:hover .message-actions {
+            opacity: 1;
         }
 
         .message-action-btn {
@@ -398,9 +448,9 @@
             border: none;
             color: var(--message-action-color);
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             transition: var(--transition);
-            padding: 0.3rem 0.8rem;
+            padding: 0.3rem 0.6rem;
             border-radius: var(--border-radius);
             display: flex;
             align-items: center;
@@ -425,6 +475,7 @@
         .edit-message-form {
             display: flex;
             margin-top: 0.5rem;
+            width: 100%;
         }
 
         .edit-message-input {
@@ -992,13 +1043,13 @@
             .chat-main {
                 height: calc(100vh - 300px);
             }
-        }
 
-        @media (max-width: 576px) {
             .message {
                 max-width: 85%;
             }
-            
+        }
+
+        @media (max-width: 576px) {
             .chat-header {
                 padding: 1rem;
             }
@@ -1010,6 +1061,22 @@
             .modal-content {
                 width: 95%;
                 padding: 1.5rem;
+            }
+
+            .message-avatar {
+                width: 30px;
+                height: 30px;
+                font-size: 0.8rem;
+                margin-right: 8px;
+            }
+
+            .message {
+                padding: 10px 14px;
+                font-size: 0.9rem;
+            }
+
+            .message-info {
+                font-size: 0.65rem;
             }
         }
     </style>
@@ -1221,7 +1288,7 @@
             apiKey: "AIzaSyDGuhlaRcSnRndX6se_tA48MD1eLjywFBQ",
             authDomain: "aogat-497c9.firebaseapp.com",
             projectId: "aogat-497c9",
-            storageBucket: "aogat-497c9.firebasestorage.app",
+            storageBucket: "aogat-497c9.appspot.com",
             messagingSenderId: "236403272662",
             appId: "1:236403272662:web:0ae9a7a65a80bc98ef1277",
             measurementId: "G-MDBQD52DS6"
@@ -1797,17 +1864,29 @@
                 lastDateDisplayed = messageDateStr;
             }
             
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${message.senderId === currentUser.uid ? 'sent' : 'received'}`;
-            messageDiv.dataset.messageId = message.id;
+            const isSent = message.senderId === currentUser.uid;
+            const messageContainer = document.createElement('div');
+            messageContainer.className = `message-container ${isSent ? 'sent' : 'received'}`;
+            messageContainer.dataset.messageId = message.id;
             
-            const messageInner = document.createElement('div');
-            messageInner.className = 'message-inner';
+            // Add avatar for received messages
+            if (!isSent) {
+                const avatarDiv = document.createElement('div');
+                avatarDiv.className = 'message-avatar';
+                avatarDiv.textContent = message.senderName.charAt(0).toUpperCase();
+                messageContainer.appendChild(avatarDiv);
+            }
+            
+            const messageContent = document.createElement('div');
+            messageContent.className = 'message-content';
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isSent ? 'sent' : 'received'}`;
             
             if (message.isEdited) {
-                messageInner.innerHTML = `${message.text} <span style="font-size: 0.7em; opacity: 0.7;">(edited)</span>`;
+                messageDiv.innerHTML = `${message.text} <span style="font-size: 0.7em; opacity: 0.7;">(edited)</span>`;
             } else {
-                messageInner.textContent = message.text;
+                messageDiv.textContent = message.text;
             }
             
             const messageInfo = document.createElement('div');
@@ -1815,7 +1894,7 @@
             
             const senderSpan = document.createElement('span');
             senderSpan.className = 'message-sender';
-            senderSpan.textContent = message.senderId === currentUser.uid ? 'You' : message.senderName;
+            senderSpan.textContent = isSent ? 'You' : message.senderName;
             
             const timeSpan = document.createElement('span');
             timeSpan.className = 'message-time';
@@ -1824,11 +1903,11 @@
             messageInfo.appendChild(senderSpan);
             messageInfo.appendChild(timeSpan);
             
-            messageDiv.appendChild(messageInner);
-            messageDiv.appendChild(messageInfo);
+            messageContent.appendChild(messageDiv);
+            messageContent.appendChild(messageInfo);
             
             // Add edit/delete buttons for user's own messages
-            if (message.senderId === currentUser.uid) {
+            if (isSent) {
                 const messageActions = document.createElement('div');
                 messageActions.className = 'message-actions';
                 
@@ -1836,7 +1915,7 @@
                 editBtn.className = 'message-action-btn';
                 editBtn.innerHTML = '<i class="fas fa-edit"></i> Edit';
                 editBtn.addEventListener('click', () => {
-                    showEditMessageForm(messageDiv, message);
+                    showEditMessageForm(messageContent, message);
                 });
                 
                 const deleteBtn = document.createElement('button');
@@ -1849,10 +1928,11 @@
                 messageActions.appendChild(editBtn);
                 messageActions.appendChild(deleteBtn);
                 
-                messageDiv.appendChild(messageActions);
+                messageContent.appendChild(messageActions);
             }
             
-            container.appendChild(messageDiv);
+            messageContainer.appendChild(messageContent);
+            container.appendChild(messageContainer);
         }
         
         // Show edit message form
