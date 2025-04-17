@@ -1406,12 +1406,14 @@
         
         // Track if user has accepted community rules
         let hasAcceptedCommunityRules = localStorage.getItem('acceptedCommunityRules') === 'true';
+        let communityNoticeShown = localStorage.getItem('communityNoticeShown') === 'true';
         
         // Function to show community notice modal
         function showCommunityNotice() {
-            if (!hasAcceptedCommunityRules) {
+            if (!hasAcceptedCommunityRules && !communityNoticeShown) {
                 communityNoticeModal.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
+                localStorage.setItem('communityNoticeShown', 'true');
             }
         }
         
@@ -1472,7 +1474,7 @@
                     document.getElementById('groupsListPage').style.display = 'none';
                     document.getElementById('chatPage').style.display = 'flex';
                     
-                    // Show community notice if not already accepted
+                    // Show community notice if not already accepted and not shown before
                     showCommunityNotice();
                     
                     // Load the group chat
@@ -1714,13 +1716,11 @@
                     
                     groupCard.addEventListener('click', () => {
                         if (group.members && group.members[currentUser.uid]) {
-                            // Show community notice if not already accepted
-                            if (!hasAcceptedCommunityRules) {
-                                showCommunityNotice();
-                            } else {
-                                // Navigate to the chat page for this group
-                                window.location.href = `?groupId=${group.groupId}`;
-                            }
+                            // Show community notice if not already accepted and not shown before
+                            showCommunityNotice();
+                            
+                            // Navigate to the chat page for this group
+                            window.location.href = `?groupId=${group.groupId}`;
                         }
                     });
                     
@@ -1791,13 +1791,11 @@
             database.ref().update(updates)
                 .then(() => {
                     showAlert('Group Joined', 'You have successfully joined the group!', 'success');
-                    // Show community notice if not already accepted
-                    if (!hasAcceptedCommunityRules) {
-                        showCommunityNotice();
-                    } else {
-                        // Navigate to the chat page for this group
-                        window.location.href = `?groupId=${groupId}`;
-                    }
+                    // Show community notice if not already accepted and not shown before
+                    showCommunityNotice();
+                    
+                    // Navigate to the chat page for this group
+                    window.location.href = `?groupId=${groupId}`;
                 })
                 .catch(error => {
                     console.error('Error joining group:', error);
