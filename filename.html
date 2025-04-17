@@ -36,10 +36,6 @@
             --box-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
             --transition: all 0.3s ease-in-out;
             --border-radius: 8px;
-            --message-action-color: #1a73e8;
-            --message-action-hover: #d4a017;
-            --message-action-bg: #000000;
-            --message-action-bg-hover: rgba(0, 0, 0, 0.7);
             --message-received-bg: rgba(212, 160, 23, 0.1);
             --message-sent-bg: #3a5a78;
             --message-padding: 12px 16px;
@@ -65,10 +61,6 @@
             --footer-text: #cccccc;
             --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             --box-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.4);
-            --message-action-color: #1a73e8;
-            --message-action-hover: #e6b800;
-            --message-action-bg: rgba(255, 255, 255, 0.05);
-            --message-action-bg-hover: rgba(255, 255, 255, 0.1);
             --message-received-bg: rgba(212, 160, 23, 0.2);
             --message-sent-bg: #5b7b9a;
         }
@@ -431,22 +423,18 @@
             right: 0;
         }
 
+        /* Updated Message Actions Styling */
         .message-actions {
             display: flex;
             gap: 0.5rem;
             margin-top: 0.5rem;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-        }
-
-        .message-container:hover .message-actions {
             opacity: 1;
         }
 
         .message-action-btn {
-            background: var(--message-action-bg);
-            border: none;
-            color: var(--message-action-color);
+            background: var(--card-bg);
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
             cursor: pointer;
             font-size: 0.7rem;
             transition: var(--transition);
@@ -458,18 +446,20 @@
         }
 
         .message-action-btn:hover {
-            color: var(--message-action-hover);
-            background-color: var(--message-action-bg-hover);
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
         }
 
         .message.sent .message-action-btn {
-            color: var(--message-action-color);
-            background-color: var(--message-action-bg);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
         }
 
         .message.sent .message-action-btn:hover {
-            color: var(--message-action-hover);
-            background-color: var(--message-action-bg-hover);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: white;
         }
 
         .edit-message-form {
@@ -1077,6 +1067,11 @@
 
             .message-info {
                 font-size: 0.65rem;
+            }
+
+            .message-action-btn {
+                padding: 0.2rem 0.4rem;
+                font-size: 0.6rem;
             }
         }
     </style>
@@ -1914,14 +1909,16 @@
                 const editBtn = document.createElement('button');
                 editBtn.className = 'message-action-btn';
                 editBtn.innerHTML = '<i class="fas fa-edit"></i> Edit';
-                editBtn.addEventListener('click', () => {
+                editBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
                     showEditMessageForm(messageContent, message);
                 });
                 
                 const deleteBtn = document.createElement('button');
                 deleteBtn.className = 'message-action-btn';
                 deleteBtn.innerHTML = '<i class="fas fa-trash"></i> Delete';
-                deleteBtn.addEventListener('click', () => {
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
                     showDeleteConfirmation(message.id);
                 });
                 
