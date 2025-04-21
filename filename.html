@@ -114,6 +114,9 @@
             padding: 1.5rem 0;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             transition: var(--transition);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .header-container {
@@ -284,6 +287,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 80px;
+            z-index: 90;
         }
 
         .chat-header-info h3 {
@@ -513,6 +519,9 @@
             padding: 1.5rem;
             background-color: var(--card-bg);
             border-top: 1px solid rgba(0, 0, 0, 0.1);
+            position: sticky;
+            bottom: 0;
+            z-index: 80;
         }
 
         .chat-form {
@@ -1021,47 +1030,92 @@
         @media (max-width: 768px) {
             .main-layout {
                 flex-direction: column;
+                height: calc(100vh - 80px);
             }
             
             .groups-sidebar {
                 width: 100%;
                 height: auto;
+                max-height: 40vh;
                 border-right: none;
                 border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                padding: 1rem;
             }
             
             .chat-main {
-                height: calc(100vh - 300px);
+                height: calc(60vh - 80px);
             }
 
             .message {
                 max-width: 85%;
             }
-        }
 
-        @media (max-width: 576px) {
             .chat-header {
                 padding: 1rem;
+                top: 0;
             }
-            
+
+            .chat-messages {
+                padding: 1rem;
+            }
+
             .chat-input-area {
                 padding: 1rem;
             }
+
+            .message-avatar {
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+                margin-right: 8px;
+            }
+
+            .message {
+                padding: 10px 14px;
+                font-size: 0.95rem;
+            }
+
+            .message-info {
+                font-size: 0.7rem;
+            }
+
+            .message-action-btn {
+                padding: 0.25rem 0.5rem;
+                font-size: 0.65rem;
+            }
+
+            .back-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .chat-members-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .groups-sidebar {
+                max-height: 45vh;
+            }
             
-            .modal-content {
-                width: 95%;
-                padding: 1.5rem;
+            .chat-main {
+                height: calc(55vh - 80px);
+            }
+
+            .message {
+                max-width: 90%;
             }
 
             .message-avatar {
                 width: 30px;
                 height: 30px;
                 font-size: 0.8rem;
-                margin-right: 8px;
             }
 
             .message {
-                padding: 10px 14px;
+                padding: 8px 12px;
                 font-size: 0.9rem;
             }
 
@@ -1072,6 +1126,90 @@
             .message-action-btn {
                 padding: 0.2rem 0.4rem;
                 font-size: 0.6rem;
+            }
+
+            .message-input {
+                padding: 0.7rem 0.9rem;
+                font-size: 0.95rem;
+            }
+
+            .send-btn {
+                width: 45px;
+                height: 45px;
+            }
+
+            .back-btn {
+                margin-right: 0.5rem;
+            }
+
+            .chat-header-info h3 {
+                font-size: 1.1rem;
+            }
+
+            .chat-header-info p {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Mobile-specific improvements */
+        @media (max-width: 480px) {
+            .groups-sidebar {
+                max-height: 50vh;
+            }
+            
+            .chat-main {
+                height: calc(50vh - 80px);
+            }
+
+            .message {
+                max-width: 95%;
+            }
+
+            .message-avatar {
+                width: 28px;
+                height: 28px;
+            }
+
+            .message-date {
+                font-size: 0.75rem;
+                margin: 1rem 0;
+            }
+
+            .chat-form {
+                flex-wrap: wrap;
+            }
+
+            .message-input {
+                width: 100%;
+                margin-bottom: 0.5rem;
+                height: 45px;
+            }
+
+            .send-btn {
+                margin-left: 0;
+                width: 100%;
+                height: 45px;
+            }
+
+            .back-btn {
+                display: none;
+            }
+
+            .chat-header {
+                padding: 0.8rem;
+            }
+
+            .chat-header-info h3 {
+                font-size: 1rem;
+            }
+
+            .chat-header-info p {
+                font-size: 0.75rem;
+            }
+
+            .chat-members-btn {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -1327,6 +1465,9 @@
                 createdBy: "admin"
             }
         };
+
+        // Track if signup alert has been shown
+        let signupAlertShown = false;
 
         // Show alert function
         function showAlert(title, message, type = 'error') {
@@ -1643,7 +1784,10 @@
                 })
                 .then(() => {
                     // Success - auth state listener will handle the UI change
-                    showAlert('Account Created', 'Your account has been created successfully!', 'success');
+                    if (!signupAlertShown) {
+                        showAlert('Account Created', 'Your account has been created successfully!', 'success');
+                        signupAlertShown = true;
+                    }
                 })
                 .catch(error => {
                     let errorMessage = 'Signup error. Please try again.';
