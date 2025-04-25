@@ -3022,6 +3022,10 @@
                     <input type="text" id="name" name="name" class="form-control" required>
                 </div>
                 <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter your phone number" required>
+                </div>
+                <div class="form-group">
                     <label for="location">Location</label>
                     <select id="location" name="location" class="form-control" required>
                         <option value="">Select Country</option>
@@ -3402,91 +3406,83 @@
         let audioChunks = [];
         let startTime;
         let timerInterval;
+        let audioBlob;
         
-        // Detect Safari browser
-        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        // Check if the browser supports mediaDevices API
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            recordBtn.addEventListener('click', startRecording);
+            stopBtn.addEventListener('click', stopRecording);
+        } else {
+            recordingStatus.textContent = 'Audio recording not supported in your browser';
+            recordBtn.disabled = true;
+        }
         
-        recordBtn.addEventListener('click', async () => {
-            try {
-                // Request microphone access
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                
-                // Create a new MediaRecorder instance with appropriate mimeType for the browser
-                const options = isSafari 
-                    ? { mimeType: 'audio/mp4' } // Safari prefers this format
-                    : { mimeType: 'audio/webm' }; // Works for Chrome and others
-                
-                try {
-                    mediaRecorder = new MediaRecorder(stream, options);
-                } catch (e) {
-                    // Fallback to default if the specified mimeType isn't supported
-                    console.warn('Preferred mimeType not supported, using default');
+        function startRecording() {
+            // Request microphone access
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    // Create a new MediaRecorder instance
                     mediaRecorder = new MediaRecorder(stream);
-                }
-                
-                // Event handler for when data is available
-                mediaRecorder.ondataavailable = (event) => {
-                    if (event.data.size > 0) {
-                        audioChunks.push(event.data);
-                    }
-                };
-                
-                // Event handler for when recording stops
-                mediaRecorder.onstop = () => {
-                    // Create a blob from the audio chunks
-                    const audioBlob = new Blob(audioChunks, { 
-                        type: isSafari ? 'audio/mp4' : 'audio/webm' 
-                    });
                     
-                    // Create a URL for the blob
-                    const audioUrl = URL.createObjectURL(audioBlob);
+                    // Event handler for when data is available
+                    mediaRecorder.ondataavailable = (event) => {
+                        if (event.data.size > 0) {
+                            audioChunks.push(event.data);
+                        }
+                    };
                     
-                    // Set the audio source and show the playback controls
-                    audioPlayback.src = audioUrl;
-                    audioPlayback.style.display = 'block';
+                    // Event handler for when recording stops
+                    mediaRecorder.onstop = () => {
+                        // Create a blob from the audio chunks
+                        audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        
+                        // Create a URL for the blob
+                        const audioUrl = URL.createObjectURL(audioBlob);
+                        
+                        // Set the audio source and show the playback controls
+                        audioPlayback.src = audioUrl;
+                        audioPlayback.style.display = 'block';
+                        
+                        // Create a File object from the Blob
+                        const audioFile = new File([audioBlob], 'recording.wav', {
+                            type: 'audio/wav'
+                        });
+                        
+                        // Create a DataTransfer object to simulate file input
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(audioFile);
+                        audioFileInput.files = dataTransfer.files;
+                        
+                        // Stop all tracks in the stream
+                        stream.getTracks().forEach(track => track.stop());
+                    };
                     
-                    // Create a File object from the Blob
-                    const audioFile = new File([audioBlob], 'recording.webm', {
-                        type: isSafari ? 'audio/mp4' : 'audio/webm'
-                    });
+                    // Start recording
+                    mediaRecorder.start();
+                    audioChunks = []; // Clear previous recordings
                     
-                    // Create a DataTransfer object to simulate file input
-                    const dataTransfer = new DataTransfer();
-                    dataTransfer.items.add(audioFile);
-                    audioFileInput.files = dataTransfer.files;
+                    // Update UI
+                    recordBtn.disabled = true;
+                    stopBtn.disabled = false;
+                    recordingStatus.textContent = 'Recording...';
                     
-                    // Stop all tracks in the stream
-                    stream.getTracks().forEach(track => track.stop());
-                };
-                
-                // Start recording
-                mediaRecorder.start(100); // Collect data every 100ms
-                
-                // Update UI
-                recordBtn.disabled = true;
-                stopBtn.disabled = false;
-                recordingStatus.textContent = 'Recording...';
-                
-                // Start timer
-                startTime = Date.now();
-                timerInterval = setInterval(updateTimer, 1000);
-                
-            } catch (error) {
-                console.error('Error accessing microphone:', error);
-                recordingStatus.textContent = 'Error accessing microphone. Please ensure you have granted microphone permissions.';
-                
-                // Show browser-specific instructions if permission is denied
-                if (error.name === 'NotAllowedError') {
-                    if (isSafari) {
-                        recordingStatus.textContent += ' On Safari, you may need to enable microphone access in Safari Preferences > Websites > Microphone.';
-                    } else {
+                    // Start timer
+                    startTime = Date.now();
+                    timerInterval = setInterval(updateTimer, 1000);
+                    
+                })
+                .catch(error => {
+                    console.error('Error accessing microphone:', error);
+                    recordingStatus.textContent = 'Error accessing microphone. Please ensure you have granted microphone permissions.';
+                    
+                    // Show browser-specific instructions if permission is denied
+                    if (error.name === 'NotAllowedError') {
                         recordingStatus.textContent += ' Please check your browser settings to allow microphone access.';
                     }
-                }
-            }
-        });
+                });
+        }
         
-        stopBtn.addEventListener('click', () => {
+        function stopRecording() {
             if (mediaRecorder && mediaRecorder.state === 'recording') {
                 // Stop recording
                 mediaRecorder.stop();
@@ -3499,7 +3495,7 @@
                 // Stop timer
                 clearInterval(timerInterval);
             }
-        });
+        }
         
         function updateTimer() {
             const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
@@ -3595,10 +3591,10 @@
                     const sectionId = section.getAttribute('id');
                     
                     // Update bottom navigation active state
-                    if (sectionId === 'sermons') {
+                    if (sectionId === '#sermons') {
                         document.querySelectorAll('.bottom-actions .action-btn').forEach(btn => btn.classList.remove('active'));
                         document.getElementById('sermonsBtn').classList.add('active');
-                    } else if (sectionId === 'audio-testimonies') {
+                    } else if (sectionId === '#audio-testimonies') {
                         document.querySelectorAll('.bottom-actions .action-btn').forEach(btn => btn.classList.remove('active'));
                         document.getElementById('testimoniesBtn').classList.add('active');
                     }
