@@ -3016,7 +3016,7 @@
                 <h3>Wo Haw Ne S3n (What's Your Problem)</h3>
                 <span class="close-btn" id="closeModal">&times;</span>
             </div>
-            <form action="https://formspree.io/f/xvgklorr" method="POST" enctype="multipart/form-data" id="prayerForm">
+            <form id="prayerForm" action="https://formspree.io/f/xvgklorr" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" id="name" name="name" class="form-control" required>
@@ -3055,7 +3055,7 @@
                         <span id="recordingTimer" class="recording-timer"></span>
                     </div>
                     <audio id="audioPlayback" controls style="display: none; width: 100%; margin-top: 1rem;"></audio>
-                    <input type="hidden" id="audioData" name="audio_data">
+                    <input type="file" id="audioFile" name="audio_file" style="display: none;">
                 </div>
                 
                 <div class="file-upload">
@@ -3395,7 +3395,7 @@
         const recordingStatus = document.getElementById('recordingStatus');
         const recordingTimer = document.getElementById('recordingTimer');
         const audioPlayback = document.getElementById('audioPlayback');
-        const audioData = document.getElementById('audioData');
+        const audioFileInput = document.getElementById('audioFile');
         const prayerForm = document.getElementById('prayerForm');
         
         let mediaRecorder;
@@ -3445,12 +3445,15 @@
                     audioPlayback.src = audioUrl;
                     audioPlayback.style.display = 'block';
                     
-                    // Convert blob to base64 for form submission
-                    const reader = new FileReader();
-                    reader.onloadend = () => {
-                        audioData.value = reader.result.split(',')[1]; // Get only the base64 data
-                    };
-                    reader.readAsDataURL(audioBlob);
+                    // Create a File object from the Blob
+                    const audioFile = new File([audioBlob], 'recording.webm', {
+                        type: isSafari ? 'audio/mp4' : 'audio/webm'
+                    });
+                    
+                    // Create a DataTransfer object to simulate file input
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(audioFile);
+                    audioFileInput.files = dataTransfer.files;
                     
                     // Stop all tracks in the stream
                     stream.getTracks().forEach(track => track.stop());
@@ -3527,12 +3530,10 @@
                     if (response.ok) {
                         form.reset();
                         successMessage.style.display = 'block';
-                        form.style.display = 'none';
                         
                         // Hide success message after 5 seconds
                         setTimeout(() => {
                             successMessage.style.display = 'none';
-                            form.style.display = 'block';
                         }, 5000);
                         
                         // For prayer request modal, also close the modal
