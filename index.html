@@ -3408,80 +3408,93 @@
         let timerInterval;
         let audioBlob;
         
-        // Check if the browser supports mediaDevices API
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        // Check for browser support
+        function isRecordingSupported() {
+            return navigator.mediaDevices && navigator.mediaDevices.getUserMedia && 
+                   (window.MediaRecorder || window.webkitMediaRecorder);
+        }
+        
+        // Initialize recording functionality
+        function initRecording() {
+            if (!isRecordingSupported()) {
+                recordingStatus.textContent = 'Audio recording not supported in your browser';
+                recordBtn.disabled = true;
+                return;
+            }
+            
             recordBtn.addEventListener('click', startRecording);
             stopBtn.addEventListener('click', stopRecording);
-        } else {
-            recordingStatus.textContent = 'Audio recording not supported in your browser';
-            recordBtn.disabled = true;
         }
         
-        function startRecording() {
-            // Request microphone access
-            navigator.mediaDevices.getUserMedia({ audio: true })
-                .then(stream => {
-                    // Create a new MediaRecorder instance
-                    mediaRecorder = new MediaRecorder(stream);
-                    
-                    // Event handler for when data is available
-                    mediaRecorder.ondataavailable = (event) => {
-                        if (event.data.size > 0) {
-                            audioChunks.push(event.data);
-                        }
-                    };
-                    
-                    // Event handler for when recording stops
-                    mediaRecorder.onstop = () => {
-                        // Create a blob from the audio chunks
-                        audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-                        
-                        // Create a URL for the blob
-                        const audioUrl = URL.createObjectURL(audioBlob);
-                        
-                        // Set the audio source and show the playback controls
-                        audioPlayback.src = audioUrl;
-                        audioPlayback.style.display = 'block';
-                        
-                        // Create a File object from the Blob
-                        const audioFile = new File([audioBlob], 'recording.wav', {
-                            type: 'audio/wav'
-                        });
-                        
-                        // Create a DataTransfer object to simulate file input
-                        const dataTransfer = new DataTransfer();
-                        dataTransfer.items.add(audioFile);
-                        audioFileInput.files = dataTransfer.files;
-                        
-                        // Stop all tracks in the stream
-                        stream.getTracks().forEach(track => track.stop());
-                    };
-                    
-                    // Start recording
-                    mediaRecorder.start();
-                    audioChunks = []; // Clear previous recordings
-                    
-                    // Update UI
-                    recordBtn.disabled = true;
-                    stopBtn.disabled = false;
-                    recordingStatus.textContent = 'Recording...';
-                    
-                    // Start timer
-                    startTime = Date.now();
-                    timerInterval = setInterval(updateTimer, 1000);
-                    
-                })
-                .catch(error => {
-                    console.error('Error accessing microphone:', error);
-                    recordingStatus.textContent = 'Error accessing microphone. Please ensure you have granted microphone permissions.';
-                    
-                    // Show browser-specific instructions if permission is denied
-                    if (error.name === 'NotAllowedError') {
-                        recordingStatus.textContent += ' Please check your browser settings to allow microphone access.';
+        // Start recording
+        async function startRecording() {
+            try {
+                // Request microphone access
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                
+                // Create a new MediaRecorder instance
+                const MediaRecorder = window.MediaRecorder || window.webkitMediaRecorder;
+                mediaRecorder = new MediaRecorder(stream);
+                
+                // Set up event handlers
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        audioChunks.push(event.data);
                     }
-                });
+                };
+                
+                mediaRecorder.onstop = () => {
+                    // Create a blob from the audio chunks
+                    const mimeType = mediaRecorder.mimeType || 'audio/webm';
+                    audioBlob = new Blob(audioChunks, { type: mimeType });
+                    
+                    // Create a URL for the blob
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    
+                    // Set the audio source and show the playback controls
+                    audioPlayback.src = audioUrl;
+                    audioPlayback.style.display = 'block';
+                    
+                    // Create a File object from the Blob
+                    const audioFile = new File([audioBlob], 'recording.webm', {
+                        type: mimeType,
+                        lastModified: Date.now()
+                    });
+                    
+                    // Create a DataTransfer object to simulate file input
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(audioFile);
+                    audioFileInput.files = dataTransfer.files;
+                    
+                    // Stop all tracks in the stream
+                    stream.getTracks().forEach(track => track.stop());
+                };
+                
+                // Start recording
+                mediaRecorder.start(100); // Collect data every 100ms
+                audioChunks = []; // Clear previous recordings
+                
+                // Update UI
+                recordBtn.disabled = true;
+                stopBtn.disabled = false;
+                recordingStatus.textContent = 'Recording...';
+                
+                // Start timer
+                startTime = Date.now();
+                timerInterval = setInterval(updateTimer, 1000);
+                
+            } catch (error) {
+                console.error('Error accessing microphone:', error);
+                recordingStatus.textContent = 'Error accessing microphone. Please ensure you have granted microphone permissions.';
+                
+                // Show browser-specific instructions if permission is denied
+                if (error.name === 'NotAllowedError') {
+                    recordingStatus.textContent += ' Please check your browser settings to allow microphone access.';
+                }
+            }
         }
         
+        // Stop recording
         function stopRecording() {
             if (mediaRecorder && mediaRecorder.state === 'recording') {
                 // Stop recording
@@ -3497,12 +3510,16 @@
             }
         }
         
+        // Update timer display
         function updateTimer() {
             const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
             const minutes = Math.floor(elapsedTime / 60).toString().padStart(2, '0');
             const seconds = (elapsedTime % 60).toString().padStart(2, '0');
             recordingTimer.textContent = `${minutes}:${seconds}`;
         }
+        
+        // Initialize recording when the page loads
+        document.addEventListener('DOMContentLoaded', initRecording);
         
         // Form submission handlers
         function handleFormSubmission(formId, successId) {
@@ -3591,10 +3608,10 @@
                     const sectionId = section.getAttribute('id');
                     
                     // Update bottom navigation active state
-                    if (sectionId === '#sermons') {
+                    if (sectionId === 'sermons') {
                         document.querySelectorAll('.bottom-actions .action-btn').forEach(btn => btn.classList.remove('active'));
                         document.getElementById('sermonsBtn').classList.add('active');
-                    } else if (sectionId === '#audio-testimonies') {
+                    } else if (sectionId === 'audio-testimonies') {
                         document.querySelectorAll('.bottom-actions .action-btn').forEach(btn => btn.classList.remove('active'));
                         document.getElementById('testimoniesBtn').classList.add('active');
                     }
