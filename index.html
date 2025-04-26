@@ -241,8 +241,8 @@
             100% { opacity: 0; }
         }
 
-        /* App Download Modal */
-        .app-download-modal {
+        /* Bible Hub Modal Styles */
+        .bible-hub-modal {
             display: none;
             position: fixed;
             top: 0;
@@ -250,66 +250,193 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.8);
-            z-index: 2001;
-            justify-content: center;
-            align-items: center;
+            z-index: 2000;
+            overflow-y: auto;
         }
 
-        .app-download-content {
+        .bible-hub-content {
             background-color: var(--card-bg);
+            margin: 2% auto;
             padding: 2rem;
             border-radius: var(--border-radius);
-            max-width: 500px;
             width: 90%;
-            text-align: center;
+            max-width: 1000px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             animation: modalFadeIn 0.3s;
         }
 
-        .app-download-content h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .app-download-content p {
-            margin-bottom: 1.5rem;
-            color: var(--text-light);
-        }
-
-        .app-download-buttons {
+        .bible-hub-header {
             display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 1.5rem;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
         }
 
-        .download-btn {
-            padding: 0.8rem 1.5rem;
-            border-radius: var(--border-radius);
-            font-weight: 600;
+        .bible-hub-header h3 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .bible-hub-close-btn {
+            background-color: var(--secondary-color);
+            color: #333;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
             cursor: pointer;
             transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             border: none;
         }
 
-        .download-btn.yes {
+        .bible-hub-close-btn:hover {
+            background-color: var(--secondary-light);
+            transform: scale(1.1);
+        }
+
+        .bible-hub-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .bible-hub-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-light);
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+        }
+
+        .bible-hub-tab.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--secondary-color);
+        }
+
+        .bible-hub-tab:hover:not(.active) {
+            color: var(--primary-color);
+        }
+
+        .bible-hub-section {
+            display: none;
+        }
+
+        .bible-hub-section.active {
+            display: block;
+        }
+
+        .miracles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .miracle-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .miracle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        .miracle-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .miracle-title {
+            padding: 1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .miracle-details {
+            display: none;
+            padding: 1rem;
+            background-color: rgba(212, 160, 23, 0.1);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+        }
+
+        .miracle-details.active {
+            display: block;
+        }
+
+        .miracle-summary {
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .miracle-reference {
+            font-style: italic;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .bible-guide-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .bible-guide-topic {
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .bible-guide-topic:hover, .bible-guide-topic.active {
             background-color: var(--secondary-color);
             color: #333;
         }
 
-        .download-btn.yes:hover {
-            background-color: var(--secondary-light);
-            transform: translateY(-3px);
+        .bible-guide-content {
+            display: none;
         }
 
-        .download-btn.no {
-            background-color: #f8f9fa;
-            color: #333;
-            border: 1px solid #ddd;
+        .bible-guide-content.active {
+            display: block;
         }
 
-        .download-btn.no:hover {
-            background-color: #e9ecef;
+        .bible-verse-item {
+            background-color: var(--card-bg);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .bible-verse-text {
+            font-style: italic;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .bible-verse-ref {
+            font-weight: 600;
+            color: var(--secondary-color);
+            text-align: right;
         }
 
         :root {
@@ -331,6 +458,7 @@
             --box-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
             --transition: all 0.3s ease-in-out;
             --border-radius: 8px;
+            --bottom-nav-height: 60px;
         }
 
         .dark-theme {
@@ -366,6 +494,7 @@
             padding-bottom: 120px;
             min-height: 100vh;
             transition: var(--transition);
+            padding-bottom: var(--bottom-nav-height);
         }
 
         h1, h2, h3, h4 {
@@ -397,17 +526,17 @@
         }
 
         .section-padding {
-            padding: 5rem 0;
+            padding: 3rem 0;
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             position: relative;
         }
 
         .section-title h2 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             color: var(--primary-color);
             display: inline-block;
         }
@@ -430,7 +559,7 @@
         header {
             background-color: var(--nav-bg);
             color: var(--nav-text);
-            padding: 1.5rem 0;
+            padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
@@ -447,7 +576,7 @@
 
         .logo {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--nav-text);
         }
@@ -468,7 +597,7 @@
 
         nav ul {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
         }
 
         nav ul li a {
@@ -506,7 +635,7 @@
             background-position: center;
             background-attachment: fixed;
             height: 100vh;
-            min-height: 700px;
+            min-height: 600px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -514,7 +643,7 @@
             text-align: center;
             color: white;
             padding: 0 1.5rem;
-            margin-top: 80px;
+            margin-top: 60px;
         }
 
         .hero-content {
@@ -523,14 +652,14 @@
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 2.5rem;
             margin-bottom: 1.5rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .hero p {
-            font-size: 1.25rem;
-            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
 
@@ -539,7 +668,7 @@
             display: inline-block;
             background-color: var(--secondary-color);
             color: #333;
-            padding: 0.8rem 2rem;
+            padding: 0.8rem 1.5rem;
             border: none;
             border-radius: 50px;
             font-weight: 600;
@@ -548,6 +677,7 @@
             cursor: pointer;
             transition: var(--transition);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-size: 0.9rem;
         }
 
         .btn:hover {
@@ -560,7 +690,8 @@
             background: transparent;
             border: 2px solid var(--secondary-color);
             color: white;
-            margin-left: 1rem;
+            margin-left: 0.5rem;
+            margin-top: 0.5rem;
         }
 
         .btn-outline:hover {
@@ -568,12 +699,19 @@
             color: #333;
         }
 
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
         /* Services Section */
         .services {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .service-card {
@@ -586,13 +724,13 @@
         }
 
         .service-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
             box-shadow: var(--box-shadow-hover);
         }
 
         .service-card img {
             width: 100%;
-            height: 250px;
+            height: 200px;
             object-fit: cover;
             transition: var(--transition);
         }
@@ -602,68 +740,70 @@
         }
 
         .service-content {
-            padding: 2rem;
+            padding: 1.5rem;
         }
 
         .service-content h3 {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             margin-bottom: 1rem;
             color: var(--primary-color);
         }
 
         .service-content p {
             color: var(--text-light);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
         }
 
         .service-icon {
-            font-size: 2.5rem;
+            font-size: 2rem;
             color: var(--secondary-color);
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
         /* About Section */
         .about {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            grid-template-columns: 1fr;
+            gap: 2rem;
             align-items: center;
         }
 
         .about-content h2 {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             color: var(--primary-color);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .about-content p {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             color: var(--text-light);
+            font-size: 0.95rem;
         }
 
         .about-stats {
             display: grid;
-            grid-template-columns: repeat(3, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
         }
 
         .stat-item {
             text-align: center;
-            padding: 1.5rem;
+            padding: 1rem;
             background: rgba(212, 160, 23, 0.1);
             border-radius: var(--border-radius);
         }
 
         .stat-number {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--secondary-color);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
         }
 
         .stat-label {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: var(--text-light);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -673,7 +813,7 @@
         .slider-container {
             position: relative;
             width: 100%;
-            height: 400px;
+            height: 300px;
             overflow: hidden;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
@@ -707,8 +847,8 @@
         /* Events Section */
         .event-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
         }
 
         .event-card {
@@ -718,7 +858,7 @@
             box-shadow: var(--box-shadow);
             transition: var(--transition);
             display: grid;
-            grid-template-columns: 100px 1fr;
+            grid-template-columns: 80px 1fr;
         }
 
         .event-card:hover {
@@ -733,28 +873,28 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 1rem;
+            padding: 0.8rem;
             text-align: center;
         }
 
         .event-day {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 700;
             line-height: 1;
         }
 
         .event-month {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .event-details {
-            padding: 1.5rem;
+            padding: 1rem;
         }
 
         .event-details h3 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: var(--primary-color);
             margin-bottom: 0.5rem;
         }
@@ -765,6 +905,7 @@
             color: var(--secondary-color);
             font-weight: 500;
             margin-bottom: 0.5rem;
+            font-size: 0.9rem;
         }
 
         .event-time i {
@@ -774,20 +915,21 @@
         .event-details p {
             color: var(--text-light);
             margin-bottom: 1rem;
+            font-size: 0.9rem;
         }
 
         /* Audio Grid Section */
         .audio-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
         }
 
         .audio-card {
             background-color: var(--card-bg);
             border-radius: var(--border-radius);
-            padding: 1.5rem;
+            padding: 1.2rem;
             box-shadow: var(--box-shadow);
             transition: var(--transition);
         }
@@ -798,14 +940,14 @@
         }
 
         .audio-title {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--primary-color);
             margin-bottom: 0.5rem;
         }
 
         .audio-date {
             color: var(--text-light);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             margin-bottom: 1rem;
         }
 
@@ -853,7 +995,7 @@
         .donation-content {
             background-color: var(--card-bg);
             margin: 5% auto;
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: var(--border-radius);
             width: 90%;
             max-width: 800px;
@@ -863,10 +1005,10 @@
 
         .donation-quote {
             font-style: italic;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             text-align: center;
-            margin-bottom: 2rem;
-            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
             background-color: rgba(212, 160, 23, 0.1);
             border-radius: var(--border-radius);
             position: relative;
@@ -875,7 +1017,7 @@
         .donation-quote::before,
         .donation-quote::after {
             content: '"';
-            font-size: 3rem;
+            font-size: 2rem;
             color: var(--secondary-color);
             opacity: 0.3;
             position: absolute;
@@ -892,27 +1034,29 @@
         }
 
         .donation-info {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .donation-info h3 {
             color: var(--primary-color);
             margin-bottom: 1rem;
+            font-size: 1.3rem;
         }
 
         .donation-info ul {
             margin-left: 1.5rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .donation-info li {
             margin-bottom: 0.8rem;
             color: var(--text-light);
+            font-size: 0.9rem;
         }
 
         .donation-image {
             text-align: center;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
         }
 
         .donation-image img {
@@ -925,19 +1069,20 @@
             margin-top: 0.5rem;
             font-style: italic;
             color: var(--text-light);
+            font-size: 0.9rem;
         }
 
         /* Improved Donation Modal Close Button */
         .donation-close-btn {
             background-color: var(--secondary-color);
             color: #333;
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1rem;
             cursor: pointer;
             transition: var(--transition);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -956,54 +1101,54 @@
         .contact {
             background-color: var(--card-bg);
             border-radius: var(--border-radius);
-            padding: 3rem;
+            padding: 1.5rem;
             box-shadow: var(--box-shadow);
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
 
         .contact-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
         }
 
         .contact-info {
             background-color: var(--card-bg);
             border-radius: var(--border-radius);
-            padding: 2rem;
+            padding: 1.5rem;
             box-shadow: var(--box-shadow);
         }
 
         .contact-info h3 {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: var(--primary-color);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .contact-form {
             background-color: var(--card-bg);
             border-radius: var(--border-radius);
-            padding: 2rem;
+            padding: 1.5rem;
             box-shadow: var(--box-shadow);
         }
 
         .contact-form h3 {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: var(--primary-color);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .form-control {
             width: 100%;
-            padding: 0.8rem 1rem;
+            padding: 0.7rem 1rem;
             border: 1px solid #ddd;
             border-radius: var(--border-radius);
             font-family: inherit;
-            font-size: 1rem;
+            font-size: 0.9rem;
             transition: var(--transition);
             background-color: var(--bg-color);
             color: var(--text-color);
@@ -1016,7 +1161,7 @@
         }
 
         textarea.form-control {
-            min-height: 150px;
+            min-height: 120px;
             resize: vertical;
         }
 
@@ -1024,12 +1169,13 @@
             background-color: var(--secondary-color);
             color: #333;
             border: none;
-            padding: 0.8rem 2rem;
+            padding: 0.7rem 1.5rem;
             border-radius: 50px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-size: 0.9rem;
         }
 
         .submit-btn:hover {
@@ -1040,14 +1186,14 @@
 
         /* Voice Recording */
         .voice-recording {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .recording-controls {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-top: 1rem;
+            gap: 0.8rem;
+            margin-top: 0.8rem;
         }
 
         .record-btn, .stop-btn {
@@ -1057,6 +1203,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
+            font-size: 0.9rem;
         }
 
         .record-btn {
@@ -1078,7 +1225,7 @@
         }
 
         .recording-status {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-light);
             margin-top: 0.5rem;
         }
@@ -1091,14 +1238,14 @@
         /* Testimonials Section */
         .testimonials {
             background-color: var(--card-bg);
-            padding: 5rem 0;
+            padding: 3rem 0;
         }
 
         .testimonial-slider {
             max-width: 800px;
             margin: 0 auto;
             position: relative;
-            padding: 0 1.5rem;
+            padding: 0 1rem;
         }
 
         .testimonial-item {
@@ -1112,30 +1259,30 @@
         }
 
         .testimonial-text {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-style: italic;
             color: var(--text-color);
-            margin-bottom: 2rem;
-            padding: 0 2rem;
+            margin-bottom: 1.5rem;
+            padding: 0 1rem;
             position: relative;
         }
 
         .testimonial-text::before,
         .testimonial-text::after {
             content: '"';
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: var(--secondary-color);
             opacity: 0.3;
             position: absolute;
         }
 
         .testimonial-text::before {
-            top: -20px;
+            top: -15px;
             left: 0;
         }
 
         .testimonial-text::after {
-            bottom: -40px;
+            bottom: -30px;
             right: 0;
         }
 
@@ -1143,15 +1290,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 3rem;
+            margin-top: 2rem;
         }
 
         .author-img {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             overflow: hidden;
-            margin-right: 1.5rem;
+            margin-right: 1rem;
             border: 3px solid var(--secondary-color);
         }
 
@@ -1162,7 +1309,7 @@
         }
 
         .author-info h4 {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             color: var(--primary-color);
             margin-bottom: 0.3rem;
             text-align: left;
@@ -1171,21 +1318,22 @@
         .author-info p {
             color: var(--text-light);
             text-align: left;
+            font-size: 0.9rem;
         }
 
         .testimonial-nav {
             display: flex;
             justify-content: center;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
         }
 
         .testimonial-nav button {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             border: none;
             background-color: #ddd;
-            margin: 0 5px;
+            margin: 0 4px;
             cursor: pointer;
             transition: var(--transition);
         }
@@ -1199,23 +1347,22 @@
         footer {
             background-color: var(--footer-bg);
             color: var(--footer-text);
-            padding: 4rem 0 2rem;
-            position: absolute;
-            bottom: 0;
+            padding: 3rem 0 1rem;
+            position: relative;
             width: 100%;
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .footer-column h3 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: var(--secondary-color);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             position: relative;
             padding-bottom: 0.5rem;
         }
@@ -1225,24 +1372,26 @@
             position: absolute;
             left: 0;
             bottom: 0;
-            width: 50px;
+            width: 40px;
             height: 2px;
             background: var(--secondary-color);
         }
 
         .footer-column p {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             color: var(--footer-text);
+            font-size: 0.9rem;
         }
 
         .footer-links li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
         }
 
         .footer-links a {
             color: var(--footer-text);
             transition: var(--transition);
             display: inline-block;
+            font-size: 0.9rem;
         }
 
         .footer-links a:hover {
@@ -1251,33 +1400,35 @@
         }
 
         .footer-contact li {
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             display: flex;
             align-items: flex-start;
+            font-size: 0.9rem;
         }
 
         .footer-contact i {
             color: var(--secondary-color);
-            margin-right: 0.8rem;
-            margin-top: 0.3rem;
+            margin-right: 0.6rem;
+            margin-top: 0.2rem;
         }
 
         .social-links {
             display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
+            gap: 0.8rem;
+            margin-top: 1rem;
         }
 
         .social-links a {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
             color: var(--footer-text);
             transition: var(--transition);
+            font-size: 0.9rem;
         }
 
         .social-links a:hover {
@@ -1288,16 +1439,16 @@
 
         .footer-bottom {
             text-align: center;
-            padding-top: 2rem;
+            padding-top: 1.5rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .footer-bottom p {
             color: var(--footer-text);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
-        /* Bottom Action Buttons */
+        /* Bottom Action Buttons - Improved Mobile Navigation */
         .bottom-actions {
             position: fixed;
             bottom: 0;
@@ -1306,9 +1457,10 @@
             background-color: var(--nav-bg);
             display: flex;
             justify-content: space-around;
-            padding: 10px 0;
+            padding: 8px 0;
             z-index: 999;
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            height: var(--bottom-nav-height);
         }
 
         .action-btn {
@@ -1316,37 +1468,44 @@
             flex-direction: column;
             align-items: center;
             color: white;
-            padding: 10px 15px;
-            margin: 0 5px;
+            padding: 8px 10px;
+            margin: 0 2px;
             border-radius: var(--border-radius);
             transition: var(--transition);
-            font-size: 0.8rem;
+            font-size: 0.7rem;
+            flex: 1;
+            max-width: 25%;
         }
 
         .action-btn i {
-            font-size: 1.2rem;
-            margin-bottom: 5px;
+            font-size: 1.1rem;
+            margin-bottom: 3px;
+        }
+
+        .action-btn.active {
+            color: var(--secondary-color);
+            transform: translateY(-5px);
         }
 
         .action-btn:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--secondary-color);
             transform: translateY(-3px);
         }
 
         /* Theme Switcher */
         .theme-switcher {
             position: fixed;
-            top: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
+            top: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             background-color: var(--card-bg);
             color: var(--text-color);
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             box-shadow: var(--box-shadow);
             cursor: pointer;
             z-index: 100;
@@ -1361,17 +1520,17 @@
         /* Back to Top Button */
         .back-to-top {
             position: fixed;
-            bottom: 70px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
+            bottom: calc(var(--bottom-nav-height) + 15px);
+            right: 15px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             background-color: var(--secondary-color);
             color: #333;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             box-shadow: var(--box-shadow);
             cursor: pointer;
             z-index: 99;
@@ -1405,20 +1564,21 @@
 
         .modal-content {
             background-color: var(--card-bg);
-            margin: 5% auto;
-            padding: 2rem;
+            margin: 10% auto;
+            padding: 1.5rem;
             border-radius: var(--border-radius);
             width: 90%;
-            max-width: 600px;
+            max-width: 500px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             animation: modalFadeIn 0.3s;
+            position: relative;
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             padding-bottom: 1rem;
             border-bottom: 1px solid #ddd;
         }
@@ -1426,6 +1586,7 @@
         .modal-header h3 {
             color: var(--primary-color);
             margin: 0;
+            font-size: 1.3rem;
         }
 
         .close-btn {
@@ -1445,6 +1606,7 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
+            font-size: 0.9rem;
         }
 
         .file-upload-input {
@@ -1453,6 +1615,7 @@
             border: 1px solid #ddd;
             border-radius: var(--border-radius);
             margin-bottom: 0.5rem;
+            font-size: 0.9rem;
         }
 
         .file-upload-note {
@@ -1469,19 +1632,20 @@
             color: var(--success-color);
             padding: 1rem;
             border-radius: var(--border-radius);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             text-align: center;
+            font-size: 0.9rem;
         }
 
         /* Loading Spinner */
         .spinner {
             display: none;
-            width: 40px;
-            height: 40px;
-            margin: 20px auto;
-            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 35px;
+            height: 35px;
+            margin: 15px auto;
+            border: 3px solid rgba(0, 0, 0, 0.1);
             border-radius: 50%;
-            border-top: 4px solid var(--secondary-color);
+            border-top: 3px solid var(--secondary-color);
             animation: spin 1s linear infinite;
         }
 
@@ -1522,7 +1686,7 @@
         .chat-header h3 {
             color: white;
             margin: 0;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
         }
 
         .chat-iframe-container {
@@ -1542,13 +1706,13 @@
         .chat-close-btn {
             background-color: var(--secondary-color);
             color: #333;
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             cursor: pointer;
             transition: var(--transition);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -1595,7 +1759,7 @@
             
             .slider-container {
                 order: -1;
-                height: 350px;
+                height: 300px;
             }
         }
 
@@ -1606,20 +1770,20 @@
             }
             
             .logo {
-                margin-bottom: 1rem;
+                margin-bottom: 0.5rem;
             }
             
             .nav-toggle {
                 display: block;
                 position: absolute;
-                top: 30px;
-                right: 20px;
+                top: 20px;
+                right: 15px;
             }
             
             nav {
                 display: none;
                 width: 100%;
-                margin-top: 1rem;
+                margin-top: 0.5rem;
             }
             
             nav.active {
@@ -1628,33 +1792,33 @@
             
             nav ul {
                 flex-direction: column;
-                gap: 0.5rem;
+                gap: 0.3rem;
             }
             
             nav ul li a {
                 display: block;
-                padding: 0.8rem;
+                padding: 0.6rem;
             }
             
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
             
             .hero p {
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
             
             .section-padding {
-                padding: 3rem 0;
+                padding: 2rem 0;
             }
             
             .section-title h2 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
 
             .testimonial-text {
                 padding: 0;
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
 
             .author-img {
@@ -1668,34 +1832,44 @@
 
             .action-btn {
                 margin: 0;
-                padding: 8px 10px;
-                font-size: 0.7rem;
+                padding: 5px 8px;
+                font-size: 0.65rem;
             }
 
             .action-btn i {
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
 
             .modal-content, .donation-content {
-                margin: 10% auto;
+                margin: 15% auto;
                 width: 95%;
-                padding: 1.5rem;
+                padding: 1.2rem;
+            }
+
+            .bible-hub-content {
+                margin: 15% auto;
+                padding: 1.2rem;
+            }
+
+            .miracles-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             }
         }
 
         @media (max-width: 576px) {
             .hero h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
             
             .btn-group {
                 display: flex;
                 flex-direction: column;
-                gap: 1rem;
+                gap: 0.8rem;
             }
             
             .btn-outline {
                 margin-left: 0;
+                margin-top: 0;
             }
             
             .services {
@@ -1728,7 +1902,7 @@
 
             .author-img {
                 margin-right: 0;
-                margin-bottom: 1rem;
+                margin-bottom: 0.8rem;
             }
 
             .author-info h4,
@@ -1737,16 +1911,16 @@
             }
 
             .bottom-actions {
-                padding: 8px 0;
+                padding: 5px 0;
             }
 
             .action-btn {
-                padding: 5px 8px;
+                padding: 5px 5px;
             }
 
             .action-btn i {
-                font-size: 0.9rem;
-                margin-bottom: 3px;
+                font-size: 0.8rem;
+                margin-bottom: 2px;
             }
 
             .action-btn span {
@@ -1754,15 +1928,33 @@
             }
 
             .slider-container {
-                height: 250px;
+                height: 200px;
             }
 
             .contact {
-                padding: 1.5rem;
+                padding: 1rem;
             }
 
             .contact-info, .contact-form {
-                padding: 1.5rem;
+                padding: 1rem;
+            }
+
+            .bible-hub-tabs {
+                flex-direction: column;
+            }
+
+            .bible-hub-tab {
+                border-bottom: none;
+                border-left: 3px solid transparent;
+            }
+
+            .bible-hub-tab.active {
+                border-bottom: none;
+                border-left: 3px solid var(--secondary-color);
+            }
+
+            .miracles-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -1777,26 +1969,447 @@
             <div class="cross-loader"></div>
         </div>
         <div class="loader-text">Arena Of Grace & Testimonies</div>
-        <div class="rotating-text">
-            <span>I am the konkonsa prophet</span>
-            <span>I am a man of God</span>
-            <span>I am an echo of His voice</span>
-            <span>I am a vessel of His grace</span>
-            <span>I am a carrier of His power</span>
-            <span>I am a messenger of hope</span>
-        </div>
         <div class="bible-verse">"For God so loved the world that he gave his one and only Son..." - John 3:16</div>
         <div class="progress-bar"><div class="progress"></div></div>
     </div>
 
-    <!-- App Download Modal -->
-    <div class="app-download-modal" id="appDownloadModal">
-        <div class="app-download-content">
-            <h3>Mobile App Available!</h3>
-            <p>There's an Android app for this website. Would you like to download it now?</p>
-            <div class="app-download-buttons">
-                <button class="download-btn yes" id="downloadAppBtn">Yes, Download</button>
-                <button class="download-btn no" id="cancelDownloadBtn">No, Thanks</button>
+    <!-- Bible Hub Modal -->
+    <div class="bible-hub-modal" id="bibleHubModal">
+        <div class="bible-hub-content">
+            <div class="bible-hub-header">
+                <h3>Bible Hub</h3>
+                <button class="bible-hub-close-btn" id="closeBibleHubModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="bible-hub-tabs">
+                <div class="bible-hub-tab active" data-tab="miracles">Biblical Miracles</div>
+                <div class="bible-hub-tab" data-tab="guide">Bible Guide</div>
+            </div>
+            
+            <div class="bible-hub-section active" id="miraclesSection">
+                <p>Explore the miraculous works of God throughout the Bible. Click on any miracle to learn more about it.</p>
+                
+                <div class="miracles-grid">
+                    <div class="miracle-card" data-miracle="creation">
+                        <img src="ab1.jpg" alt="Creation" class="miracle-image">
+                        <div class="miracle-title">Creation of the World</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">God spoke the universe into existence in six days, creating light, sky, land, plants, sun, moon, stars, sea creatures, birds, animals, and finally humans in His own image.</p>
+                            <p class="miracle-reference">Genesis 1:1-2:3</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="flood">
+                        <img src="ab2.jpg" alt="Noah's Ark" class="miracle-image">
+                        <div class="miracle-title">Noah's Ark and the Flood</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">God sent a worldwide flood to cleanse the earth of wickedness, saving only Noah, his family, and representatives of each animal species in a massive ark.</p>
+                            <p class="miracle-reference">Genesis 6-9</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="red-sea">
+                        <img src="ab3.jpg" alt="Red Sea" class="miracle-image">
+                        <div class="miracle-title">Parting of the Red Sea</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">Moses stretched out his hand over the Red Sea, and God caused a strong east wind to divide the waters, allowing the Israelites to cross on dry ground while drowning the pursuing Egyptian army.</p>
+                            <p class="miracle-reference">Exodus 14:21-31</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="manna">
+                        <img src="ab4.jpg" alt="Manna" class="miracle-image">
+                        <div class="miracle-title">Manna from Heaven</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">God provided bread from heaven each morning to feed the Israelites during their 40 years in the wilderness, with double portions before the Sabbath.</p>
+                            <p class="miracle-reference">Exodus 16:4-36</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="jordan">
+                        <img src="ab5.jpg" alt="Jordan River" class="miracle-image">
+                        <div class="miracle-title">Jordan River Stopped</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">When the priests carrying the Ark of the Covenant stepped into the Jordan River at flood stage, the waters stopped flowing, allowing Israel to cross into the Promised Land on dry ground.</p>
+                            <p class="miracle-reference">Joshua 3:14-17</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="jericho">
+                        <img src="ab6.jpg" alt="Jericho" class="miracle-image">
+                        <div class="miracle-title">Fall of Jericho</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">After marching around Jericho for seven days as God commanded, the Israelites' shouts and trumpet blasts caused the city walls to collapse, giving them victory.</p>
+                            <p class="miracle-reference">Joshua 6:1-27</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="fire">
+                        <img src="ab7.jpg" alt="Elijah and Fire" class="miracle-image">
+                        <div class="miracle-title">Elijah and the Fire from Heaven</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">In a contest with Baal's prophets, Elijah prayed and God sent fire from heaven to consume his water-soaked sacrifice, proving He is the one true God.</p>
+                            <p class="miracle-reference">1 Kings 18:20-40</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="widow">
+                        <img src="ab8.jpg" alt="Widow's Oil" class="miracle-image">
+                        <div class="miracle-title">Widow's Oil Multiplied</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">Elisha told a poor widow to gather empty jars, and God miraculously multiplied her small amount of oil to fill them all, providing money to pay her debts and live on.</p>
+                            <p class="miracle-reference">2 Kings 4:1-7</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="shadrach">
+                        <img src="ab9.jpg" alt="Fiery Furnace" class="miracle-image">
+                        <div class="miracle-title">Fiery Furnace</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">When Shadrach, Meshach and Abednego refused to worship a golden image, God protected them in a blazing furnace so hot it killed their guards, leaving them unharmed.</p>
+                            <p class="miracle-reference">Daniel 3:8-30</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="lion">
+                        <img src="ab10.jpg" alt="Lion's Den" class="miracle-image">
+                        <div class="miracle-title">Daniel in the Lion's Den</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">God sent an angel to shut the mouths of lions when Daniel was thrown into their den for praying to God rather than the king, emerging unharmed the next morning.</p>
+                            <p class="miracle-reference">Daniel 6:1-28</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="jonah">
+                        <img src="ab11.jpg" alt="Jonah and the Whale" class="miracle-image">
+                        <div class="miracle-title">Jonah and the Great Fish</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">After Jonah was thrown overboard for disobeying God, a great fish swallowed him and three days later vomited him onto dry land, giving him a second chance to obey.</p>
+                            <p class="miracle-reference">Jonah 1:17-2:10</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="virgin">
+                        <img src="ab12.jpg" alt="Virgin Birth" class="miracle-image">
+                        <div class="miracle-title">Virgin Birth of Jesus</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">Jesus was miraculously conceived by the Holy Spirit in the virgin Mary, fulfilling prophecy and demonstrating God's power to bring salvation to humanity.</p>
+                            <p class="miracle-reference">Matthew 1:18-25; Luke 1:26-38</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="water-wine">
+                        <img src="ab13.jpg" alt="Water to Wine" class="miracle-image">
+                        <div class="miracle-title">Water Turned to Wine</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">At a wedding in Cana, Jesus turned six stone jars of water into the finest wine, His first public miracle that revealed His glory and power.</p>
+                            <p class="miracle-reference">John 2:1-11</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="loaves">
+                        <img src="ab14.jpg" alt="Loaves and Fishes" class="miracle-image">
+                        <div class="miracle-title">Feeding the 5,000</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">With just five loaves and two fish, Jesus miraculously fed over 5,000 people, with twelve baskets of leftovers remaining after all had eaten.</p>
+                            <p class="miracle-reference">Matthew 14:13-21; John 6:1-14</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="walking">
+                        <img src="ab15.jpg" alt="Walking on Water" class="miracle-image">
+                        <div class="miracle-title">Walking on Water</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">Jesus walked on the Sea of Galilee during a storm, inviting Peter to join Him and saving him when he began to sink from doubt.</p>
+                            <p class="miracle-reference">Matthew 14:22-33</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="lazarus">
+                        <img src="ab16.jpg" alt="Lazarus" class="miracle-image">
+                        <div class="miracle-title">Raising Lazarus</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">After being dead four days, Lazarus was brought back to life when Jesus called him out of the tomb, demonstrating His power over death.</p>
+                            <p class="miracle-reference">John 11:1-44</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="resurrection">
+                        <img src="ab17.jpg" alt="Resurrection" class="miracle-image">
+                        <div class="miracle-title">Resurrection of Jesus</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">After being crucified and buried for three days, Jesus rose from the dead, conquering sin and death and providing eternal life for all who believe.</p>
+                            <p class="miracle-reference">Matthew 28:1-10; 1 Corinthians 15:3-8</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="pentecost">
+                        <img src="ab18.jpg" alt="Pentecost" class="miracle-image">
+                        <div class="miracle-title">Day of Pentecost</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">The Holy Spirit descended on believers with tongues of fire, enabling them to speak in other languages and launching the church's mission to the world.</p>
+                            <p class="miracle-reference">Acts 2:1-41</p>
+                        </div>
+                    </div>
+                    
+                    <div class="miracle-card" data-miracle="paul">
+                        <img src="ab19.jpg" alt="Paul's Conversion" class="miracle-image">
+                        <div class="miracle-title">Paul's Conversion</div>
+                        <div class="miracle-details">
+                            <p class="miracle-summary">Jesus appeared in a blinding light to Saul (Paul) on the road to Damascus, miraculously transforming this persecutor of Christians into a devoted apostle.</p>
+                            <p class="miracle-reference">Acts 9:1-19</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bible-hub-section" id="guideSection">
+                <p>Explore biblical teachings on important topics. Select a topic to see relevant scripture passages.</p>
+                
+                <div class="bible-guide-topics">
+                    <div class="bible-guide-topic active" data-topic="love">Love</div>
+                    <div class="bible-guide-topic" data-topic="faith">Faith</div>
+                    <div class="bible-guide-topic" data-topic="hope">Hope</div>
+                    <div class="bible-guide-topic" data-topic="salvation">Salvation</div>
+                    <div class="bible-guide-topic" data-topic="prayer">Prayer</div>
+                    <div class="bible-guide-topic" data-topic="forgiveness">Forgiveness</div>
+                    <div class="bible-guide-topic" data-topic="wisdom">Wisdom</div>
+                    <div class="bible-guide-topic" data-topic="peace">Peace</div>
+                    <div class="bible-guide-topic" data-topic="joy">Joy</div>
+                    <div class="bible-guide-topic" data-topic="service">Service</div>
+                </div>
+                
+                <div class="bible-guide-content active" data-topic="love">
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."</p>
+                        <p class="bible-verse-ref">John 3:16</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Love is patient, love is kind. It does not envy, it does not boast, it is not proud. It does not dishonor others, it is not self-seeking, it is not easily angered, it keeps no record of wrongs."</p>
+                        <p class="bible-verse-ref">1 Corinthians 13:4-5</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"We love because he first loved us."</p>
+                        <p class="bible-verse-ref">1 John 4:19</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Above all, love each other deeply, because love covers over a multitude of sins."</p>
+                        <p class="bible-verse-ref">1 Peter 4:8</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"And now these three remain: faith, hope and love. But the greatest of these is love."</p>
+                        <p class="bible-verse-ref">1 Corinthians 13:13</p>
+                    </div>
+                </div>
+                
+                <div class="bible-guide-content" data-topic="faith">
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Now faith is confidence in what we hope for and assurance about what we do not see."</p>
+                        <p class="bible-verse-ref">Hebrews 11:1</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"And without faith it is impossible to please God, because anyone who comes to him must believe that he exists and that he rewards those who earnestly seek him."</p>
+                        <p class="bible-verse-ref">Hebrews 11:6</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"For we live by faith, not by sight."</p>
+                        <p class="bible-verse-ref">2 Corinthians 5:7</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Jesus replied, 'Truly I tell you, if you have faith as small as a mustard seed, you can say to this mountain, "Move from here to there," and it will move. Nothing will be impossible for you.'"</p>
+                        <p class="bible-verse-ref">Matthew 17:20</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Fight the good fight of the faith. Take hold of the eternal life to which you were called when you made your good confession in the presence of many witnesses."</p>
+                        <p class="bible-verse-ref">1 Timothy 6:12</p>
+                    </div>
+                </div>
+                
+                <div class="bible-guide-content" data-topic="hope">
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"For I know the plans I have for you," declares the Lord, "plans to prosper you and not to harm you, plans to give you hope and a future."</p>
+                        <p class="bible-verse-ref">Jeremiah 29:11</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"But those who hope in the Lord will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint."</p>
+                        <p class="bible-verse-ref">Isaiah 40:31</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"May the God of hope fill you with all joy and peace as you trust in him, so that you may overflow with hope by the power of the Holy Spirit."</p>
+                        <p class="bible-verse-ref">Romans 15:13</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"We have this hope as an anchor for the soul, firm and secure. It enters the inner sanctuary behind the curtain."</p>
+                        <p class="bible-verse-ref">Hebrews 6:19</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"And hope does not put us to shame, because God's love has been poured out into our hearts through the Holy Spirit, who has been given to us."</p>
+                        <p class="bible-verse-ref">Romans 5:5</p>
+                    </div>
+                </div>
+                
+                <div class="bible-guide-content" data-topic="salvation">
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"For it is by grace you have been saved, through faith—and this is not from yourselves, it is the gift of God—not by works, so that no one can boast."</p>
+                        <p class="bible-verse-ref">Ephesians 2:8-9</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Jesus answered, 'I am the way and the truth and the life. No one comes to the Father except through me.'"</p>
+                        <p class="bible-verse-ref">John 14:6</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"If you declare with your mouth, 'Jesus is Lord,' and believe in your heart that God raised him from the dead, you will be saved."</p>
+                        <p class="bible-verse-ref">Romans 10:9</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Salvation is found in no one else, for there is no other name under heaven given to mankind by which we must be saved."</p>
+                        <p class="bible-verse-ref">Acts 4:12</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"The Lord is not slow in keeping his promise, as some understand slowness. Instead he is patient with you, not wanting anyone to perish, but everyone to come to repentance."</p>
+                        <p class="bible-verse-ref">2 Peter 3:9</p>
+                    </div>
+                </div>
+                
+                <div class="bible-guide-content" data-topic="prayer">
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God."</p>
+                        <p class="bible-verse-ref">Philippians 4:6</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"This is the confidence we have in approaching God: that if we ask anything according to his will, he hears us."</p>
+                        <p class="bible-verse-ref">1 John 5:14</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"And when you pray, do not keep on babbling like pagans, for they think they will be heard because of their many words. Do not be like them, for your Father knows what you need before you ask him."</p>
+                        <p class="bible-verse-ref">Matthew 6:7-8</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Then you will call on me and come and pray to me, and I will listen to you."</p>
+                        <p class="bible-verse-ref">Jeremiah 29:12</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Therefore I tell you, whatever you ask for in prayer, believe that you have received it, and it will be yours."</p>
+                        <p class="bible-verse-ref">Mark 11:24</p>
+                    </div>
+                </div>
+                
+                <div class="bible-guide-content" data-topic="forgiveness">
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"If we confess our sins, he is faithful and just and will forgive us our sins and purify us from all unrighteousness."</p>
+                        <p class="bible-verse-ref">1 John 1:9</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Bear with each other and forgive one another if any of you has a grievance against someone. Forgive as the Lord forgave you."</p>
+                        <p class="bible-verse-ref">Colossians 3:13</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Then Peter came to Jesus and asked, 'Lord, how many times shall I forgive my brother or sister who sins against me? Up to seven times?' Jesus answered, 'I tell you, not seven times, but seventy-seven times.'"</p>
+                        <p class="bible-verse-ref">Matthew 18:21-22</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"For if you forgive other people when they sin against you, your heavenly Father will also forgive you. But if you do not forgive others their sins, your Father will not forgive your sins."</p>
+                        <p class="bible-verse-ref">Matthew 6:14-15</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"In him we have redemption through his blood, the forgiveness of sins, in accordance with the riches of God's grace."</p>
+                        <p class="bible-verse-ref">Ephesians 1:7</p>
+                    </div>
+                </div>
+                
+                <div class="bible-guide-content" data-topic="wisdom">
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you."</p>
+                        <p class="bible-verse-ref">James 1:5</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"The fear of the Lord is the beginning of wisdom, and knowledge of the Holy One is understanding."</p>
+                        <p class="bible-verse-ref">Proverbs 9:10</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"For the Lord gives wisdom; from his mouth come knowledge and understanding."</p>
+                        <p class="bible-verse-ref">Proverbs 2:6</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Who is wise and understanding among you? Let them show it by their good life, by deeds done in the humility that comes from wisdom."</p>
+                        <p class="bible-verse-ref">James 3:13</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Do not be wise in your own eyes; fear the Lord and shun evil."</p>
+                        <p class="bible-verse-ref">Proverbs 3:7</p>
+                    </div>
+                </div>
+                
+                <div class="bible-guide-content" data-topic="peace">
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Peace I leave with you; my peace I give you. I do not give to you as the world gives. Do not let your hearts be troubled and do not be afraid."</p>
+                        <p class="bible-verse-ref">John 14:27</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God. And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus."</p>
+                        <p class="bible-verse-ref">Philippians 4:6-7</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"You will keep in perfect peace those whose minds are steadfast, because they trust in you."</p>
+                        <p class="bible-verse-ref">Isaiah 26:3</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Let the peace of Christ rule in your hearts, since as members of one body you were called to peace. And be thankful."</p>
+                        <p class="bible-verse-ref">Colossians 3:15</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Now may the Lord of peace himself give you peace at all times and in every way. The Lord be with all of you."</p>
+                        <p class="bible-verse-ref">2 Thessalonians 3:16</p>
+                    </div>
+                </div>
+                
+                <div class="bible-guide-content" data-topic="joy">
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Consider it pure joy, my brothers and sisters, whenever you face trials of many kinds, because you know that the testing of your faith produces perseverance."</p>
+                        <p class="bible-verse-ref">James 1:2-3</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"The joy of the Lord is your strength."</p>
+                        <p class="bible-verse-ref">Nehemiah 8:10</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"You make known to me the path of life; you will fill me with joy in your presence, with eternal pleasures at your right hand."</p>
+                        <p class="bible-verse-ref">Psalm 16:11</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"I have told you this so that my joy may be in you and that your joy may be complete."</p>
+                        <p class="bible-verse-ref">John 15:11</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Rejoice in the Lord always. I will say it again: Rejoice!"</p>
+                        <p class="bible-verse-ref">Philippians 4:4</p>
+                    </div>
+                </div>
+                
+                <div class="bible-guide-content" data-topic="service">
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"For even the Son of Man did not come to be served, but to serve, and to give his life as a ransom for many."</p>
+                        <p class="bible-verse-ref">Mark 10:45</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Each of you should use whatever gift you have received to serve others, as faithful stewards of God's grace in its various forms."</p>
+                        <p class="bible-verse-ref">1 Peter 4:10</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Now that I, your Lord and Teacher, have washed your feet, you also should wash one another's feet. I have set you an example that you should do as I have done for you."</p>
+                        <p class="bible-verse-ref">John 13:14-15</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Do nothing out of selfish ambition or vain conceit. Rather, in humility value others above yourselves, not looking to your own interests but each of you to the interests of the others."</p>
+                        <p class="bible-verse-ref">Philippians 2:3-4</p>
+                    </div>
+                    <div class="bible-verse-item">
+                        <p class="bible-verse-text">"Whoever wants to become great among you must be your servant, and whoever wants to be first must be slave of all."</p>
+                        <p class="bible-verse-ref">Mark 10:43-44</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1826,6 +2439,14 @@
                 </ul>
             </nav>
         </div>
+        <div class="rotating-text">
+            <span>I am the konkonsa prophet</span>
+            <span>I am a man of God</span>
+            <span>I am an echo of His voice</span>
+            <span>I am a vessel of His grace</span>
+            <span>I am a carrier of His power</span>
+            <span>I am a messenger of hope</span>
+        </div>
     </header>
 
     <!-- Hero Section -->
@@ -1836,6 +2457,7 @@
             <div class="btn-group">
                 <a href="https://www.tiktok.com/@prophet.osei?_t=ZM-8vTS78tvVo6&_r=1" target="_blank" class="btn">Join Us This Sunday</a>
                 <button class="btn btn-outline" id="prayerRequestBtn">Wo Haw Ne S3n</button>
+                <button class="btn btn-outline" id="bibleHubBtn">Bible Hub</button>
             </div>
         </div>
     </section>
@@ -1945,8 +2567,8 @@
                 
                 <div class="audio-grid">
                     <div class="audio-card">
-                        <h3 class="audio-title">The Power of Faith</h3>
-                        <p class="audio-date">June 5, 2023</p>
+                        <h3 class="audio-title">Time Is God</h3>
+                        <p class="audio-date">June 5, 2025</p>
                         <audio controls class="audio-player">
                             <source src="sermon1.mp3" type="audio/mpeg">
                             Your browser does not support the audio element.
@@ -1955,7 +2577,7 @@
                     
                     <div class="audio-card">
                         <h3 class="audio-title">Walking in Grace</h3>
-                        <p class="audio-date">May 29, 2023</p>
+                        <p class="audio-date">May 29, 2025</p>
                         <audio controls class="audio-player">
                             <source src="sermon2.mp3" type="audio/mpeg">
                             Your browser does not support the audio element.
@@ -1963,7 +2585,7 @@
                     </div>
                     
                     <div class="audio-card">
-                        <h3 class="audio-title">Overcoming Trials</h3>
+                        <h3 class="audio-title">Why Hate Thy Neighbour</h3>
                         <p class="audio-date">May 22, 2023</p>
                         <audio controls class="audio-player">
                             <source src="sermon3.mp3" type="audio/mpeg">
@@ -1972,7 +2594,7 @@
                     </div>
                     
                     <div class="audio-card">
-                        <h3 class="audio-title">The Love of God</h3>
+                        <h3 class="audio-title">The Power Of Giving</h3>
                         <p class="audio-date">May 15, 2023</p>
                         <audio controls class="audio-player">
                             <source src="sermon4.mp3" type="audio/mpeg">
@@ -1981,10 +2603,26 @@
                     </div>
 
                      <div class="audio-card">
-                        <h3 class="audio-title">The Love of God</h3>
-                        <p class="audio-date">May 15, 2023</p>
+                        <h3 class="audio-title">Reward and Punishment</h3>
+                        <p class="audio-date">May 21, 2023</p>
                         <audio controls class="audio-player">
                             <source src="sermon5.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                    <div class="audio-card">
+                        <h3 class="audio-title">Do You Hear Your God?</h3>
+                        <p class="audio-date">May 15, 2025</p>
+                        <audio controls class="audio-player">
+                            <source src="manni1.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                    <div class="audio-card">
+                        <h3 class="audio-title">Good Relationship With People, Is Godly</h3>
+                        <p class="audio-date">May 21, 2025</p>
+                        <audio controls class="audio-player">
+                            <source src="manni2.mp3" type="audio/mpeg">
                             Your browser does not support the audio element.
                         </audio>
                     </div>
@@ -2064,11 +2702,11 @@
                         </div>
                         <div class="testimonial-author">
                             <div class="author-img">
-                                <img src="b.jpg" alt="Sarah Johnson">
+                                <img src="b.jpg" alt="Adongo Anita">
                             </div>
                             <div class="author-info">
-                                <h4>Sarah Johnson</h4>
-                                <p>Member since 2018</p>
+                                <h4>Adongo Anita</h4>
+                                <p>Member since 2024</p>
                             </div>
                         </div>
                     </div>
@@ -2079,11 +2717,11 @@
                         </div>
                         <div class="testimonial-author">
                             <div class="author-img">
-                                <img src="a.jpg" alt="Michael Thompson">
+                                <img src="a.jpg" alt="Colonial Master">
                             </div>
                             <div class="author-info">
-                                <h4>Michael Thompson</h4>
-                                <p>Member since 2020</p>
+                                <h4>Colonial Master</h4>
+                                <p>Member since 2024</p>
                             </div>
                         </div>
                     </div>
@@ -2097,8 +2735,8 @@
                                 <img src="k.jpg" alt="The Mensah Family">
                             </div>
                             <div class="author-info">
-                                <h4>The Rodriguez Family</h4>
-                                <p>Members since 2019</p>
+                                <h4>Rockson Richard Ofori</h4>
+                                <p>Members since 2024</p>
                             </div>
                         </div>
                     </div>
@@ -2232,9 +2870,9 @@
                     <h3>About Us</h3>
                     <p>Arena of Grace and Testimonies is a vibrant Christian community committed to making disciples, transforming lives, and impacting our world with the love of Christ.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://wa.me/+32492255205"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="arenaofgraceandtestimonies@gmail.com"><i class="fab fa-envelope"></i></a>
+                        <a href="wa.me/+32492255205"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
                         <a href="#"><i class="fab fa-youtube"></i></a>
                         <a href="https://www.tiktok.com/@prophet.osei?_t=ZM-8vTS78tvVo6&_r=1" target="_blank"><i class="fab fa-tiktok"></i></a>
                         <a href="tel:+32492255205"><i class="fas fa-phone"></i></a>
@@ -2378,10 +3016,14 @@
                 <h3>Wo Haw Ne S3n (What's Your Problem)</h3>
                 <span class="close-btn" id="closeModal">&times;</span>
             </div>
-            <form action="https://formspree.io/f/xvgklorr" method="POST" enctype="multipart/form-data" id="prayerForm">
+            <form id="prayerForm" action="https://formspree.io/f/xvgklorr" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" id="name" name="name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter your phone number" required>
                 </div>
                 <div class="form-group">
                     <label for="location">Location</label>
@@ -2417,7 +3059,7 @@
                         <span id="recordingTimer" class="recording-timer"></span>
                     </div>
                     <audio id="audioPlayback" controls style="display: none; width: 100%; margin-top: 1rem;"></audio>
-                    <input type="hidden" id="audioData" name="audio_data">
+                    <input type="file" id="audioFile" name="audio_file" style="display: none;">
                 </div>
                 
                 <div class="file-upload">
@@ -2493,9 +3135,18 @@
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
                     window.scrollTo({
-                        top: targetElement.offsetTop - 80,
+                        top: targetElement.offsetTop - 60,
                         behavior: 'smooth'
                     });
+                    
+                    // Update active state for bottom navigation
+                    if (targetId === '#sermons') {
+                        document.querySelectorAll('.bottom-actions .action-btn').forEach(btn => btn.classList.remove('active'));
+                        document.getElementById('sermonsBtn').classList.add('active');
+                    } else if (targetId === '#audio-testimonies') {
+                        document.querySelectorAll('.bottom-actions .action-btn').forEach(btn => btn.classList.remove('active'));
+                        document.getElementById('testimoniesBtn').classList.add('active');
+                    }
                 }
             });
         });
@@ -2607,23 +3258,17 @@
             e.preventDefault();
             chatModal.style.display = 'block';
             document.body.style.overflow = 'hidden';
-            // Add fullscreen class to body when chat is open
-            document.body.classList.add('chat-open');
         });
         
         closeChatModal.addEventListener('click', () => {
             chatModal.style.display = 'none';
             document.body.style.overflow = 'auto';
-            // Remove fullscreen class from body when chat is closed
-            document.body.classList.remove('chat-open');
         });
         
         window.addEventListener('click', (e) => {
             if (e.target === chatModal) {
                 chatModal.style.display = 'none';
                 document.body.style.overflow = 'auto';
-                // Remove fullscreen class from body when chat is closed
-                document.body.classList.remove('chat-open');
             }
         });
 
@@ -2640,10 +3285,14 @@
             // Toggle sermons section
             sermonsSection.classList.toggle('active');
             
+            // Update active state
+            document.querySelectorAll('.bottom-actions .action-btn').forEach(btn => btn.classList.remove('active'));
+            sermonsBtn.classList.add('active');
+            
             // Scroll to sermons section
             if (sermonsSection.classList.contains('active')) {
                 window.scrollTo({
-                    top: sermonsSection.offsetTop - 80,
+                    top: sermonsSection.offsetTop - 60,
                     behavior: 'smooth'
                 });
             }
@@ -2656,13 +3305,92 @@
             // Toggle testimonies section
             testimoniesSection.classList.toggle('active');
             
+            // Update active state
+            document.querySelectorAll('.bottom-actions .action-btn').forEach(btn => btn.classList.remove('active'));
+            testimoniesBtn.classList.add('active');
+            
             // Scroll to testimonies section
             if (testimoniesSection.classList.contains('active')) {
                 window.scrollTo({
-                    top: testimoniesSection.offsetTop - 80,
+                    top: testimoniesSection.offsetTop - 60,
                     behavior: 'smooth'
                 });
             }
+        });
+
+        // Bible Hub Modal functionality
+        const bibleHubBtn = document.getElementById('bibleHubBtn');
+        const bibleHubModal = document.getElementById('bibleHubModal');
+        const closeBibleHubModal = document.getElementById('closeBibleHubModal');
+        
+        bibleHubBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            bibleHubModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeBibleHubModal.addEventListener('click', () => {
+            bibleHubModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === bibleHubModal) {
+                bibleHubModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Bible Hub Tabs functionality
+        const bibleHubTabs = document.querySelectorAll('.bible-hub-tab');
+        const bibleHubSections = document.querySelectorAll('.bible-hub-section');
+        
+        bibleHubTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and sections
+                bibleHubTabs.forEach(t => t.classList.remove('active'));
+                bibleHubSections.forEach(s => s.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding section
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(`${tabId}Section`).classList.add('active');
+            });
+        });
+
+        // Bible Guide Topics functionality
+        const bibleGuideTopics = document.querySelectorAll('.bible-guide-topic');
+        const bibleGuideContents = document.querySelectorAll('.bible-guide-content');
+        
+        bibleGuideTopics.forEach(topic => {
+            topic.addEventListener('click', () => {
+                // Remove active class from all topics and contents
+                bibleGuideTopics.forEach(t => t.classList.remove('active'));
+                bibleGuideContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked topic and corresponding content
+                topic.classList.add('active');
+                const topicId = topic.getAttribute('data-topic');
+                document.querySelector(`.bible-guide-content[data-topic="${topicId}"]`).classList.add('active');
+            });
+        });
+
+        // Miracle Cards functionality
+        const miracleCards = document.querySelectorAll('.miracle-card');
+        
+        miracleCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Toggle the active class for the clicked card's details
+                const details = card.querySelector('.miracle-details');
+                details.classList.toggle('active');
+                
+                // Close other open miracle details
+                miracleCards.forEach(c => {
+                    if (c !== card) {
+                        c.querySelector('.miracle-details').classList.remove('active');
+                    }
+                });
+            });
         });
 
         // Voice recording functionality for prayer form
@@ -2671,48 +3399,54 @@
         const recordingStatus = document.getElementById('recordingStatus');
         const recordingTimer = document.getElementById('recordingTimer');
         const audioPlayback = document.getElementById('audioPlayback');
-        const audioData = document.getElementById('audioData');
+        const audioFileInput = document.getElementById('audioFile');
         const prayerForm = document.getElementById('prayerForm');
         
         let mediaRecorder;
         let audioChunks = [];
         let startTime;
         let timerInterval;
+        let audioBlob;
         
-        // Detect Safari browser
-        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        // Check for browser support
+        function isRecordingSupported() {
+            return navigator.mediaDevices && navigator.mediaDevices.getUserMedia && 
+                   (window.MediaRecorder || window.webkitMediaRecorder);
+        }
         
-        recordBtn.addEventListener('click', async () => {
+        // Initialize recording functionality
+        function initRecording() {
+            if (!isRecordingSupported()) {
+                recordingStatus.textContent = 'Audio recording not supported in your browser';
+                recordBtn.disabled = true;
+                return;
+            }
+            
+            recordBtn.addEventListener('click', startRecording);
+            stopBtn.addEventListener('click', stopRecording);
+        }
+        
+        // Start recording
+        async function startRecording() {
             try {
                 // Request microphone access
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                 
-                // Create a new MediaRecorder instance with appropriate mimeType for the browser
-                const options = isSafari 
-                    ? { mimeType: 'audio/mp4' } // Safari prefers this format
-                    : { mimeType: 'audio/webm' }; // Works for Chrome and others
+                // Create a new MediaRecorder instance
+                const MediaRecorder = window.MediaRecorder || window.webkitMediaRecorder;
+                mediaRecorder = new MediaRecorder(stream);
                 
-                try {
-                    mediaRecorder = new MediaRecorder(stream, options);
-                } catch (e) {
-                    // Fallback to default if the specified mimeType isn't supported
-                    console.warn('Preferred mimeType not supported, using default');
-                    mediaRecorder = new MediaRecorder(stream);
-                }
-                
-                // Event handler for when data is available
+                // Set up event handlers
                 mediaRecorder.ondataavailable = (event) => {
                     if (event.data.size > 0) {
                         audioChunks.push(event.data);
                     }
                 };
                 
-                // Event handler for when recording stops
                 mediaRecorder.onstop = () => {
                     // Create a blob from the audio chunks
-                    const audioBlob = new Blob(audioChunks, { 
-                        type: isSafari ? 'audio/mp4' : 'audio/webm' 
-                    });
+                    const mimeType = mediaRecorder.mimeType || 'audio/webm';
+                    audioBlob = new Blob(audioChunks, { type: mimeType });
                     
                     // Create a URL for the blob
                     const audioUrl = URL.createObjectURL(audioBlob);
@@ -2721,12 +3455,16 @@
                     audioPlayback.src = audioUrl;
                     audioPlayback.style.display = 'block';
                     
-                    // Convert blob to base64 for form submission
-                    const reader = new FileReader();
-                    reader.onloadend = () => {
-                        audioData.value = reader.result.split(',')[1]; // Get only the base64 data
-                    };
-                    reader.readAsDataURL(audioBlob);
+                    // Create a File object from the Blob
+                    const audioFile = new File([audioBlob], 'recording.webm', {
+                        type: mimeType,
+                        lastModified: Date.now()
+                    });
+                    
+                    // Create a DataTransfer object to simulate file input
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(audioFile);
+                    audioFileInput.files = dataTransfer.files;
                     
                     // Stop all tracks in the stream
                     stream.getTracks().forEach(track => track.stop());
@@ -2734,6 +3472,7 @@
                 
                 // Start recording
                 mediaRecorder.start(100); // Collect data every 100ms
+                audioChunks = []; // Clear previous recordings
                 
                 // Update UI
                 recordBtn.disabled = true;
@@ -2750,16 +3489,13 @@
                 
                 // Show browser-specific instructions if permission is denied
                 if (error.name === 'NotAllowedError') {
-                    if (isSafari) {
-                        recordingStatus.textContent += ' On Safari, you may need to enable microphone access in Safari Preferences > Websites > Microphone.';
-                    } else {
-                        recordingStatus.textContent += ' Please check your browser settings to allow microphone access.';
-                    }
+                    recordingStatus.textContent += ' Please check your browser settings to allow microphone access.';
                 }
             }
-        });
+        }
         
-        stopBtn.addEventListener('click', () => {
+        // Stop recording
+        function stopRecording() {
             if (mediaRecorder && mediaRecorder.state === 'recording') {
                 // Stop recording
                 mediaRecorder.stop();
@@ -2772,14 +3508,18 @@
                 // Stop timer
                 clearInterval(timerInterval);
             }
-        });
+        }
         
+        // Update timer display
         function updateTimer() {
             const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
             const minutes = Math.floor(elapsedTime / 60).toString().padStart(2, '0');
             const seconds = (elapsedTime % 60).toString().padStart(2, '0');
             recordingTimer.textContent = `${minutes}:${seconds}`;
         }
+        
+        // Initialize recording when the page loads
+        document.addEventListener('DOMContentLoaded', initRecording);
         
         // Form submission handlers
         function handleFormSubmission(formId, successId) {
@@ -2803,12 +3543,10 @@
                     if (response.ok) {
                         form.reset();
                         successMessage.style.display = 'block';
-                        form.style.display = 'none';
                         
                         // Hide success message after 5 seconds
                         setTimeout(() => {
                             successMessage.style.display = 'none';
-                            form.style.display = 'block';
                         }, 5000);
                         
                         // For prayer request modal, also close the modal
@@ -2850,59 +3588,35 @@
         window.addEventListener('scroll', animateOnScroll);
         window.addEventListener('load', animateOnScroll);
 
-        // App Download Modal Functionality
-        const appDownloadModal = document.getElementById('appDownloadModal');
-        const downloadAppBtn = document.getElementById('downloadAppBtn');
-        const cancelDownloadBtn = document.getElementById('cancelDownloadBtn');
-
-        // Show app download modal after 1 minute (60000 milliseconds)
+        // Hide loader after animation completes
         setTimeout(() => {
-            // Only show if not already shown
-            if (!localStorage.getItem('appDownloadShown')) {
-                appDownloadModal.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            }
-        }, 60000);
+            document.querySelector('.loader').style.display = 'none';
+        }, 9000);
 
-        // Handle download button click
-        downloadAppBtn.addEventListener('click', () => {
-            // Set a flag that the download was shown
-            localStorage.setItem('appDownloadShown', 'true');
+        // Bottom navigation active state management
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
             
-            // Create a temporary link to trigger the download
-            const link = document.createElement('a');
-            link.href = 'https://github.com/.arenaofgrace./app.apk'; // Updated APK download link
-            link.download = 'ArenaOfGraceApp.apk';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            // Get all sections
+            const sections = document.querySelectorAll('section');
             
-            // Close the modal
-            appDownloadModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-            
-            // Show download confirmation
-            alert('Download started! If it doesn\'t start automatically, please check your downloads folder.');
-        });
-
-        // Handle cancel button click
-        cancelDownloadBtn.addEventListener('click', () => {
-            // Set a flag that the download was shown
-            localStorage.setItem('appDownloadShown', 'true');
-            
-            appDownloadModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        });
-
-        // Close modal when clicking outside the content
-        window.addEventListener('click', (e) => {
-            if (e.target === appDownloadModal) {
-                // Set a flag that the download was shown
-                localStorage.setItem('appDownloadShown', 'true');
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionBottom = sectionTop + section.offsetHeight;
                 
-                appDownloadModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                    const sectionId = section.getAttribute('id');
+                    
+                    // Update bottom navigation active state
+                    if (sectionId === 'sermons') {
+                        document.querySelectorAll('.bottom-actions .action-btn').forEach(btn => btn.classList.remove('active'));
+                        document.getElementById('sermonsBtn').classList.add('active');
+                    } else if (sectionId === 'audio-testimonies') {
+                        document.querySelectorAll('.bottom-actions .action-btn').forEach(btn => btn.classList.remove('active'));
+                        document.getElementById('testimoniesBtn').classList.add('active');
+                    }
+                }
+            });
         });
     </script>
 </body>
