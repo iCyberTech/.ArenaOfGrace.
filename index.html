@@ -3407,6 +3407,7 @@
         let startTime;
         let timerInterval;
         let audioBlob;
+        let stream;
         
         // Check if the browser supports mediaDevices API
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -3420,7 +3421,9 @@
         function startRecording() {
             // Request microphone access
             navigator.mediaDevices.getUserMedia({ audio: true })
-                .then(stream => {
+                .then(s => {
+                    stream = s;
+                    
                     // Create a new MediaRecorder instance
                     mediaRecorder = new MediaRecorder(stream);
                     
@@ -3458,7 +3461,7 @@
                     };
                     
                     // Start recording
-                    mediaRecorder.start();
+                    mediaRecorder.start(100); // Collect 100ms of data at a time
                     audioChunks = []; // Clear previous recordings
                     
                     // Update UI
@@ -3494,6 +3497,11 @@
                 
                 // Stop timer
                 clearInterval(timerInterval);
+                
+                // Stop all tracks in the stream
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                }
             }
         }
         
@@ -3504,6 +3512,33 @@
             recordingTimer.textContent = `${minutes}:${seconds}`;
         }
         
+        // Clean up when modal is closed
+        prayerRequestModal.addEventListener('click', function(e) {
+            if (e.target === prayerRequestModal || e.target.id === 'closeModal') {
+                if (mediaRecorder && mediaRecorder.state === 'recording') {
+                    stopRecording();
+                }
+                
+                // Clear any existing recording
+                audioChunks = [];
+                if (audioPlayback) {
+                    audioPlayback.src = '';
+                    audioPlayback.style.display = 'none';
+                }
+                if (audioFileInput) {
+                    audioFileInput.value = '';
+                }
+                recordingStatus.textContent = 'Ready to record';
+                recordingTimer.textContent = '';
+                clearInterval(timerInterval);
+                
+                // Stop any active streams
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                }
+            }
+        });
+
         // Form submission handlers
         function handleFormSubmission(formId, successId) {
             const form = document.getElementById(formId);
