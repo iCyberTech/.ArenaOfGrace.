@@ -2436,7 +2436,7 @@
                     <li><a href="#events">Events</a></li>
                     <li><a href="#testimonials">Testimonies</a></li>
                     <li><a href="#contact">Contact</a></li>
-                    <li><a href="https://www.arenaofgrace.com/app.apk/" download="ArenaOfGraceApp.apk" class="download-app-btn">Download App</a></li>
+                    <li><a href="https://www.arenaofgrace.com/app.apk" download="ArenaOfGraceApp.apk" class="download-app-btn">Download App</a></li>
                 </ul>
             </nav>
         </div>
@@ -2889,7 +2889,7 @@
                         <li><a href="#events">Events</a></li>
                         <li><a href="#testimonials">Testimonies</a></li>
                         <li><a href="#contact">Contact</a></li>
-                        <li><a href="app.apk" download="ArenaOfGraceApp.apk">Download App</a></li>
+                        <li><a href="https://www.arenaofgrace.com/app.apk" download="ArenaOfGraceApp.apk">Download App</a></li>
                     </ul>
                 </div>
                 
@@ -3618,6 +3618,15 @@
                         document.getElementById('testimoniesBtn').classList.add('active');
                     }
                 }
+            });
+        });
+
+        // Force download of app file when clicking download button
+        document.querySelectorAll('.download-app-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // This ensures the browser downloads the file rather than trying to display it
+                e.preventDefault();
+                window.location.href = this.href;
             });
         });
     </script>
